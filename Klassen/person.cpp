@@ -67,6 +67,13 @@ string Person::getGeschlecht()
   return geschlecht;
 }
 
+void Person::setGeburtsdatum(int jahr, int monat, int tag)
+{
+  geburtsdatum.setJahr(jahr);
+  geburtsdatum.setMonat(monat);
+  geburtsdatum.setTag(tag);
+}
+
 // FUNKTIONEN
 
 int Person::getAlter()

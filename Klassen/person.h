@@ -17,6 +17,7 @@ public:
     string getNachname();
     void setGeschlecht(string geschlecht);
     string getGeschlecht();
+    void setGeburtsdatum(int jahr, int monat, int tag);
     // FUNKTIONEN
     int getAlter(); // Funktion zum ueberpruefun des alter ob bei CDs zb Alter ok ist wegen vergabe
 private:
