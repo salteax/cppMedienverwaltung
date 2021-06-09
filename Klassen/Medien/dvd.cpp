@@ -13,8 +13,8 @@ DVD::DVD()
 
   setTitel("");
   setKennzeichen("dvd");
-  setAusleihDatum(ausleihDatum);
-  setRueckgabeDatum(rueckgabeDatum);
+  setAusleihDatum(0,0,0);
+  setRueckgabeDatum(0,0,0);
   setAusleihStatus(false);
   setAusleiher("");
   this->fsk=0;
@@ -22,12 +22,12 @@ DVD::DVD()
   this->genre="";
 }
 
-DVD::DVD(string titel, Date ausleihDatum, Date rueckgabeDatum, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre)
+DVD::DVD(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre)
 {
   setTitel(titel);
   setKennzeichen("dvd");
-  setAusleihDatum(ausleihDatum);
-  setRueckgabeDatum(rueckgabeDatum);
+  setAusleihDatum(jahrA, monatA, tagA);
+  setRueckgabeDatum(jahrR, monatR, tagR);
   setAusleihStatus(ausleihStatus);
   setAusleiher(ausleiher);
   this->fsk=fsk;

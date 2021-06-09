@@ -13,19 +13,19 @@ CD::CD()
 
   setTitel("");
   setKennzeichen("cd");
-  setAusleihDatum(ausleihDatum);
-  setRueckgabeDatum(rueckgabeDatum);
+  setAusleihDatum(0,0,0);
+  setRueckgabeDatum(0,0,0);
   setAusleihStatus(false);
   setAusleiher("");
   this->dauer=0;
 }
 
-CD::CD(string titel, Date ausleihDatum, Date rueckgabeDatum, bool ausleihStatus, string ausleiher, int dauer)
+CD::CD(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int dauer)
 {
   setTitel(titel);
   setKennzeichen("cd");
-  setAusleihDatum(ausleihDatum);
-  setRueckgabeDatum(rueckgabeDatum);
+  setAusleihDatum(jahrA, monatA, tagA);
+  setRueckgabeDatum(jahrR, monatR, tagR);
   setAusleihStatus(ausleihStatus);
   setAusleiher(ausleiher);
   this->dauer=dauer;

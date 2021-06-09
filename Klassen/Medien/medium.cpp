@@ -25,9 +25,11 @@ string Medium::getKennzeichen()
   return kennzeichen;
 }
 
-void Medium::setAusleihDatum(Date ausleihDatum)
+void Medium::setAusleihDatum(int jahr, int monat, int tag)
 {
-  this->ausleihDatum=ausleihDatum;
+  ausleihDatum.setJahr(jahr);
+  ausleihDatum.setMonat(monat);
+  ausleihDatum.setTag(tag);
 }
 
 Date Medium::getAusleihDatum()
@@ -35,9 +37,11 @@ Date Medium::getAusleihDatum()
   return ausleihDatum;
 }
 
-void Medium::setRueckgabeDatum(Date rueckgabeDatum)
+void Medium::setRueckgabeDatum(int jahr, int monat, int tag)
 {
-  this->rueckgabeDatum=rueckgabeDatum;
+  rueckgabeDatum.setJahr(jahr);
+  rueckgabeDatum.setMonat(monat);
+  rueckgabeDatum.setTag(tag);
 }
 
 Date Medium::getRueckgabeDatum()
