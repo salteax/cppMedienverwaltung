@@ -13,12 +13,8 @@ Buch::Buch()
 
   setTitel("");
   setKennzeichen("b");
-  ausleihDatum.setJahr(0);
-  ausleihDatum.setMonat(0);
-  ausleihDatum.setTag(0);
-  rueckgabeDatum.setJahr(0);
-  rueckgabeDatum.setMonat(0);
-  rueckgabeDatum.setTag(0);
+  setAusleihDatum(0,0,0);
+  setRueckgabeDatum(0,0,0);
   setAusleihStatus(false);
   setAusleiher("");
   this->autor="";
@@ -30,12 +26,8 @@ Buch::Buch(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR,
 {
   setTitel(titel);
   setKennzeichen("b");
-  ausleihDatum.setJahr(jahrA);
-  ausleihDatum.setMonat(monatA);
-  ausleihDatum.setTag(tagA);
-  rueckgabeDatum.setJahr(jahrR);
-  rueckgabeDatum.setMonat(monatR);
-  rueckgabeDatum.setTag(tagR);
+  setAusleihDatum(jahrA, monatA, tagA);
+  setRueckgabeDatum(jahrR, monatR, tagR);
   setAusleihStatus(ausleihStatus);
   setAusleiher(ausleiher);
   this->autor=autor;
@@ -71,28 +63,4 @@ void Buch::setSeitenanzahl(int seitenanzahl)
 int Buch::getSeitenanzahl()
 {
   return seitenanzahl;
-}
-
-void Buch::setAusleihDatum(int jahr, int monat, int tag)
-{
-  ausleihDatum.setJahr(jahr);
-  ausleihDatum.setMonat(monat);
-  ausleihDatum.setTag(tag);
-}
-
-Date Buch::getAusleihDatum()
-{
-  return ausleihDatum;
-}
-
-void Buch::setRueckgabeDatum(int jahr, int monat, int tag)
-{
-  rueckgabeDatum.setJahr(jahr);
-  rueckgabeDatum.setMonat(monat);
-  rueckgabeDatum.setTag(tag);
-}
-
-Date Buch::getRueckgabeDatum()
-{
-  return rueckgabeDatum;
 }

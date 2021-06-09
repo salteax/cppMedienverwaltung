@@ -9,7 +9,7 @@ class DVD : public Medium
 public:
     // KONSTRUKTOREN
     DVD();
-    DVD(string titel, Date ausleihDatum, Date rueckgabeDatum, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre);
+    DVD(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre);
     // SETTER & GETTER
     void setFSK(int fsk);
     int getFSK();

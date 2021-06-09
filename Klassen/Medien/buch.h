@@ -17,14 +17,9 @@ public:
     string getVerlag();
     void setSeitenanzahl(int seitenanzahl);
     int getSeitenanzahl();
-    void setAusleihDatum(int jahr, int monat, int tag);
-    Date getAusleihDatum();
-    void setRueckgabeDatum(int jahr, int monat, int tag);
-    Date getRueckgabeDatum();
     // FUNKTIONEN
 private:
   string autor, verlag;
   int seitenanzahl;
-  Date ausleihDatum, rueckgabeDatum;
 };
 #endif
