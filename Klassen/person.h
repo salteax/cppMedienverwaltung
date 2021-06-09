@@ -7,7 +7,7 @@ class Person
 public:
     // KONSTRUKTOREN
     Person();
-    Person(string vorname, string nachname, string geschlecht, int jahr, int monat, int tag);
+    Person(string pid, string vorname, string nachname, string geschlecht, int jahr, int monat, int tag);
     // SETTER & GETTER
     void setPID(string pid);
     string getPID();
@@ -18,6 +18,7 @@ public:
     void setGeschlecht(string geschlecht);
     string getGeschlecht();
     void setGeburtsdatum(int jahr, int monat, int tag);
+    Date getGeburtsdatum();
     // FUNKTIONEN
     int getAlter(); // Funktion zum ueberpruefun des alter ob bei CDs zb Alter ok ist wegen vergabe
 private:

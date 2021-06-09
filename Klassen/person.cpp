@@ -9,14 +9,15 @@ using namespace std;
 
 Person::Person()
 {
-  vorname=nachname=geschlecht="";
+  pid=vorname=nachname=geschlecht="";
   geburtsdatum.setJahr(0);
   geburtsdatum.setMonat(0);
   geburtsdatum.setTag(0);
 }
 
-Person::Person(string vorname, string nachname, string geschlecht, int jahr, int monat, int tag)
+Person::Person(string pid, string vorname, string nachname, string geschlecht, int jahr, int monat, int tag)
 {
+  this->pid = pid;
   this->vorname = vorname;
   this->nachname = nachname;
   this->geschlecht = geschlecht;
@@ -72,6 +73,11 @@ void Person::setGeburtsdatum(int jahr, int monat, int tag)
   geburtsdatum.setJahr(jahr);
   geburtsdatum.setMonat(monat);
   geburtsdatum.setTag(tag);
+}
+
+Date Person::getGeburtsdatum()
+{
+  return geburtsdatum;
 }
 
 // FUNKTIONEN
