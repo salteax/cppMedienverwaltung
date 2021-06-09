@@ -44,3 +44,9 @@ int Date::getTag()
 {
     return tag;
 }
+
+ostream& operator<<(ostream& os, const Date& d)
+{
+    os << d.tag << "." << d.monat << "." << d.jahr;
+    return os;
+}

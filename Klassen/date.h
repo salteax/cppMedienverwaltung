@@ -13,6 +13,7 @@ public:
     int getMonat();
     void setTag(int tag);
     int getTag();
+    friend ostream &operator<<(ostream &os, const Date &d);
 private:
     int jahr, monat, tag;
 };

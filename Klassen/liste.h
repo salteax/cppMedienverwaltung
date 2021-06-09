@@ -52,7 +52,7 @@ int Liste<T>::getSize()
 template <class T>
 void Liste<T>::addElement(T value)
 {
-  buffer.push_back(value);
+  buffer.emplace_back(value);
 }
 
 template <class T>
@@ -64,5 +64,5 @@ void Liste<T>::removeElement(int i)
 template <class T>
 T& Liste<T>::operator[](int i)
 {
-    return (buffer.at(i+1));
+    return (buffer.at(i));
 }
