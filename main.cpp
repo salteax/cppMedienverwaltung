@@ -2,7 +2,6 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream>
-#include <chrono>
 using namespace std;
 #include "./Klassen/person.h"
 #include "./Klassen/date.h"
@@ -12,11 +11,42 @@ using namespace std;
 #include "./Klassen/Medien/cd.h"
 #include "./Klassen/Medien/dvd.h"
 
+/*
+TODO:
+Alles Leerzeichen bei Strings durch '_' umtauschen + reverse
+
+*/
+
+
 // Globale Variablen
 Liste<Person> pListe;
 Liste<Buch> bListe;
 Liste<CD> cListe;
 Liste<DVD> dListe;
+
+void addMedium(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl)
+{
+  Buch tempBuch(titel, jahrA, monatA, tagA, jahrR, monatR, tagR, ausleihStatus, ausleiher, autor, verlag, seitenanzahl);
+  bListe.addElement(tempBuch);
+}
+
+void addMedium(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int dauer)
+{
+  CD tempCD(titel, jahrA, monatA, tagA, jahrR, monatR, tagR, ausleihStatus, ausleiher, dauer);
+  cListe.addElement(tempCD);
+}
+
+void addMedium(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre)
+{
+  DVD tempDVD(titel, jahrA, monatA, tagA, jahrR, monatR, tagR, ausleihStatus, ausleiher, fsk, dauer, genre);
+  dListe.addElement(tempDVD);
+}
+
+void addPerson(string pid, string vorname, string nachname, string geschlecht, int jahr, int monat, int tag)
+{
+  Person tempPerson(pid, vorname, nachname, geschlecht, jahr, monat, tag);
+  pListe.addElement(tempPerson);
+}
 
 void fileToListe()
 {
@@ -43,8 +73,7 @@ void fileToListe()
   {
     my_stream.str(line);
     my_stream >> pid >> vorname >> nachname >> geschlecht >> jahr1 >> monat1 >> tag1 >> c;
-    Person tempPerson(pid, vorname, nachname, geschlecht, stoi(jahr1), stoi(monat1), stoi(tag1));
-    pListe.addElement(tempPerson);
+    addPerson(pid, vorname, nachname, geschlecht, stoi(jahr1), stoi(monat1), stoi(tag1));
     my_stream.clear();
   }
 
@@ -69,8 +98,7 @@ void fileToListe()
       {
         my_stream.str(line);
         my_stream >> c >> titel >> jahr1 >> monat1 >> tag1 >> jahr2 >> monat2 >> tag2 >> ausleihStatus >> ausleiher >> autor >> verlag >> seitenanzahl >> c;
-        Buch tempBuch(titel, stoi(jahr1), stoi(monat1), stoi(tag1), stoi(jahr2), stoi(monat2), stoi(tag2), ausleihStatus, ausleiher, autor, verlag, stoi(seitenanzahl));
-        bListe.addElement(tempBuch);
+        addMedium(titel, stoi(jahr1), stoi(monat1), stoi(tag1), stoi(jahr2), stoi(monat2), stoi(tag2), ausleihStatus, ausleiher, autor, verlag, stoi(seitenanzahl));
         my_stream.clear();
       }
       break;
@@ -78,8 +106,7 @@ void fileToListe()
       {
         my_stream.str(line);
         my_stream >> c >> titel >> jahr1 >> monat1 >> tag1 >> jahr2 >> monat2 >> tag2 >> ausleihStatus >> ausleiher >> dauer >> c;
-        CD tempCD(titel, stoi(jahr1), stoi(monat1), stoi(tag1), stoi(jahr2), stoi(monat2), stoi(tag2), ausleihStatus, ausleiher, stoi(dauer));
-        cListe.addElement(tempCD);
+        addMedium(titel, stoi(jahr1), stoi(monat1), stoi(tag1), stoi(jahr2), stoi(monat2), stoi(tag2), ausleihStatus, ausleiher, stoi(dauer));
         my_stream.clear();
       }
       break;
@@ -87,8 +114,7 @@ void fileToListe()
       {
         my_stream.str(line);
         my_stream >> c >> titel >> jahr1 >> monat1 >> tag1 >> jahr2 >> monat2 >> tag2 >> ausleihStatus >> ausleiher >> fsk >> dauer >> genre >> c;
-        DVD tempDVD(titel, stoi(jahr1), stoi(monat1), stoi(tag1), stoi(jahr2), stoi(monat2), stoi(tag2), ausleihStatus, ausleiher, stoi(fsk), stoi(dauer), genre);
-        dListe.addElement(tempDVD);
+        addMedium(titel, stoi(jahr1), stoi(monat1), stoi(tag1), stoi(jahr2), stoi(monat2), stoi(tag2), ausleihStatus, ausleiher, stoi(fsk), stoi(dauer), genre);
         my_stream.clear();
       }
       break;
@@ -139,24 +165,29 @@ void listeToFile()
 
 void open()
 {
-
   cout << "Start" << endl;
 
   cout << "Einlesen der Datei - ANFANG" << endl;
   fileToListe();
   cout << "Einlesen der Datei - ENDE" << endl;
-  listeToFile();
+
 }
 
 void close()
 {
+  cout << "Auslesen der Listen - ANFANG" << endl;
+  listeToFile();
+  cout << "Auslesen der Listen - ENDE" << endl;
 
+  cout << "Ende" << endl;
 }
 
 int main(int argc, char*argv[])
 {
+  // Compiler-Command
   //g++ main.cpp Klassen/person.cpp Klassen/date.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp
-  open();
 
+  open();
+  close();
   return 0;
 }
