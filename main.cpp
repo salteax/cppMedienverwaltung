@@ -14,7 +14,7 @@ using namespace std;
 /*
 TODO:
 Alles Leerzeichen bei Strings durch '_' umtauschen + reverse
-
+Funktionen verleih, rueckgabe
 */
 
 
