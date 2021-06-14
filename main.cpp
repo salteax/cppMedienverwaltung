@@ -45,8 +45,8 @@ void fileToListe()
     my_stream >> pid >> vorname >> nachname >> geschlecht >> jahr1 >> monat1 >> tag1 >> c;
     Person tempPerson(pid, vorname, nachname, geschlecht, stoi(jahr1), stoi(monat1), stoi(tag1));
     pListe.addElement(tempPerson);
+    my_stream.clear();
   }
-  my_stream.clear();
 
   file.close();
 
@@ -100,19 +100,52 @@ void fileToListe()
 
 void listeToFile()
 {
+  ofstream file;
+  file.open("./Daten/person.dat");
+  if(file.fail())
+  {
+    cout << "Datei konnte nicht geoeffnet werden!" << endl;
+  }
 
+  file.seekp(0);
+
+  for (int i = 0; i < pListe.getSize(); i++) {
+    file << pListe[i].getPID() << " " << pListe[i].getVorname() << " " << pListe[i].getNachname() << " " << pListe[i].getGeschlecht() << " " << pListe[i].getGeburtsdatum().getJahr() << " " << pListe[i].getGeburtsdatum().getMonat() << " " << pListe[i].getGeburtsdatum().getTag() << endl;
+  }
+  file.close();
+
+  file.open("./Daten/medien.dat");
+  if(file.fail())
+  {
+    cout << "Datei konnte nicht geoeffnet werden!" << endl;
+  }
+
+  file.seekp(0);
+
+  for (int i = 0; i < bListe.getSize(); i++) {
+    file << "1" << " " << bListe[i].getTitel() << " " << bListe[i].getAusleihDatum().getJahr() << " " << bListe[i].getAusleihDatum().getMonat() << " " << bListe[i].getAusleihDatum().getTag() << " " << bListe[i].getRueckgabeDatum().getJahr() << " " << bListe[i].getRueckgabeDatum().getMonat() << " " << bListe[i].getRueckgabeDatum().getTag() << " " << bListe[i].getAusleihStatus() << " " << bListe[i].getAusleiher() << " " << bListe[i].getAutor() << " " << bListe[i].getVerlag() << " " << bListe[i].getSeitenanzahl() << endl;
+  }
+
+  for (int i = 0; i < cListe.getSize(); i++) {
+    file << "2" << " " << cListe[i].getTitel() << " " << cListe[i].getAusleihDatum().getJahr() << " " << cListe[i].getAusleihDatum().getMonat() << " " << cListe[i].getAusleihDatum().getTag() << " " << cListe[i].getRueckgabeDatum().getJahr() << " " << cListe[i].getRueckgabeDatum().getMonat() << " " << cListe[i].getRueckgabeDatum().getTag() << " " << cListe[i].getAusleihStatus() << " " << cListe[i].getAusleiher() << " " << cListe[i].getDauer() << endl;
+  }
+
+  for (int i = 0; i < dListe.getSize(); i++) {
+    file << "3" << " " << dListe[i].getTitel() << " " << dListe[i].getAusleihDatum().getJahr() << " " << dListe[i].getAusleihDatum().getMonat() << " " << dListe[i].getAusleihDatum().getTag() << " " << dListe[i].getRueckgabeDatum().getJahr() << " " << dListe[i].getRueckgabeDatum().getMonat() << " " << dListe[i].getRueckgabeDatum().getTag() << " " << dListe[i].getAusleihStatus() << " " << dListe[i].getAusleiher() << " " << dListe[i].getFSK() << " " << dListe[i].getDauer() << " " << dListe[i].getGenre() << endl;
+  }
+
+  file.close();
 }
 
 void open()
 {
-  // TODO: GENERELL FUNKTION DIE AUSFUEHRZEIT VON FUNKTIONEN BERECHNET VLLT NUR WENN ZEIT
 
   cout << "Start" << endl;
 
   cout << "Einlesen der Datei - ANFANG" << endl;
   fileToListe();
   cout << "Einlesen der Datei - ENDE" << endl;
-
+  listeToFile();
 }
 
 void close()

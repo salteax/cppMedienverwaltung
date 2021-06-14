@@ -53,12 +53,14 @@ template <class T>
 void Liste<T>::addElement(T value)
 {
   buffer.emplace_back(value);
+  size = size + 1;
 }
 
 template <class T>
 void Liste<T>::removeElement(int i)
 {
   buffer.erase(i);
+  size = size - 1;
 }
 
 template <class T>
