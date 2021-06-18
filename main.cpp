@@ -170,7 +170,6 @@ bool aus_rueckgabe(char c, string id, string pid) {
       if (bListe[val].getAusleihStatus() == test_val) {
         return false;
       } else {
-        cout << "t" << endl;
         if (c == 'r') {
           bListe[val].setAusleiher("0");
         }
@@ -245,8 +244,6 @@ int main(int argc, char*argv[]) {
   //g++ main.cpp Klassen/person.cpp Klassen/date.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp
 
   open();
-    bool boolean = aus_rueckgabe('a',"B001","P002");
-    cout << boolean << endl;
   close();
   return 0;
 }
