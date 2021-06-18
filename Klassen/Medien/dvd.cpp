@@ -10,7 +10,7 @@ DVD::DVD()
 {
   Date ausleihDatum;
   Date rueckgabeDatum;
-
+  setID("");
   setTitel("");
   setKennzeichen("dvd");
   setAusleihDatum(0,0,0);
@@ -22,8 +22,9 @@ DVD::DVD()
   this->genre="";
 }
 
-DVD::DVD(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre)
+DVD::DVD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre)
 {
+  setID(id);
   setTitel(titel);
   setKennzeichen("dvd");
   setAusleihDatum(jahrA, monatA, tagA);

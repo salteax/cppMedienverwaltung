@@ -10,7 +10,7 @@ Buch::Buch()
 {
   Date ausleihDatum;
   Date rueckgabeDatum;
-
+  setID("");
   setTitel("");
   setKennzeichen("b");
   setAusleihDatum(0,0,0);
@@ -22,8 +22,9 @@ Buch::Buch()
   this->seitenanzahl=0;
 }
 
-Buch::Buch(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl)
+Buch::Buch(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl)
 {
+  setID(id);
   setTitel(titel);
   setKennzeichen("b");
   setAusleihDatum(jahrA, monatA, tagA);

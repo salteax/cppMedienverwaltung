@@ -5,6 +5,16 @@ using namespace std;
 #include "../date.h"
 #include "medium.h"
 
+void Medium::setID(string id)
+{
+  this->id=id;
+}
+
+string Medium::getID()
+{
+  return id;
+}
+
 void Medium::setTitel(string titel)
 {
   this->titel=titel;

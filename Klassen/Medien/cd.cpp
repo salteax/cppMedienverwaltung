@@ -10,7 +10,7 @@ CD::CD()
 {
   Date ausleihDatum;
   Date rueckgabeDatum;
-
+  setID("");
   setTitel("");
   setKennzeichen("cd");
   setAusleihDatum(0,0,0);
@@ -20,8 +20,9 @@ CD::CD()
   this->dauer=0;
 }
 
-CD::CD(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int dauer)
+CD::CD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int dauer)
 {
+  setID(id);
   setTitel(titel);
   setKennzeichen("cd");
   setAusleihDatum(jahrA, monatA, tagA);

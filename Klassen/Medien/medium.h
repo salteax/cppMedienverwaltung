@@ -6,6 +6,8 @@ class Medium
 {
 public:
     // SETTER & GETTER
+    void setID(string id);
+    string getID();
     void setTitel(string titel);
     string getTitel();
     void setKennzeichen(string kennzeichen);
@@ -21,7 +23,7 @@ public:
 
     // FUNKTIONEN
 private:
-    string pid, titel, kennzeichen;
+    string id, pid, titel, kennzeichen;
     Date ausleihDatum, rueckgabeDatum;
     bool ausleihStatus;
 };

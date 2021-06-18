@@ -9,7 +9,7 @@ class Buch : public Medium
 public:
     // KONSTRUKTOREN
     Buch();
-    Buch(string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl);
+    Buch(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl);
     // SETTER & GETTER
     void setAutor(string autor);
     string getAutor();
