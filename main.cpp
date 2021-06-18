@@ -17,7 +17,6 @@ Alles Leerzeichen bei Strings durch '_' umtauschen + reverse
 Funktionen verleih, rueckgabe
 */
 
-
 // Globale Variablen
 Liste<Person> pListe;
 Liste<Buch> bListe;
