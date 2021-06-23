@@ -15,6 +15,11 @@ using namespace std;
 TODO:
 Alles Leerzeichen bei Strings durch '_' umtauschen + reverse
 Funktionen verleih, rueckgabe
+
+
+Verwaltung der Personen (erfassen, anzeigen, auflisten, löschen ...)
+Verwaltung der Medien(s.o.)
+
 */
 
 // Globale Variablen
