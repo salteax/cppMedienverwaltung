@@ -5,8 +5,7 @@
 using namespace std;
 
 template <class T>
-class Liste
-{
+class Liste {
 public:
   // KONSTRUKTOREN
   Liste();
@@ -26,53 +25,45 @@ private:
 #endif
 
 template <class T>
-Liste<T>::Liste()
-{
+Liste<T>::Liste() {
   size=0;
 }
 
 template <class T>
-Liste<T>::Liste(int size)
-{
+Liste<T>::Liste(int size) {
   this->size=size;
   buffer.reserve(size);
 }
 
 template <class T>
-void Liste<T>::setSize(int i)
-{
+void Liste<T>::setSize(int i) {
   this->size=size;
 }
 
 template <class T>
-int Liste<T>::getSize()
-{
+int Liste<T>::getSize() {
   return size;
 }
 
 template <class T>
-void Liste<T>::addElement(T value)
-{
+void Liste<T>::addElement(T value) {
   buffer.emplace_back(value);
   size = size + 1;
 }
 
 template <class T>
-void Liste<T>::removeElement(int i)
-{
+void Liste<T>::removeElement(int i) {
   buffer.erase(i);
   size = size - 1;
 }
 
 template <class T>
-void Liste<T>::clear()
-{
+void Liste<T>::clear() {
   buffer.clear();
   size = 0;
 }
 
 template <class T>
-T& Liste<T>::operator[](int i)
-{
+T& Liste<T>::operator[](int i) {
     return (buffer.at(i));
 }

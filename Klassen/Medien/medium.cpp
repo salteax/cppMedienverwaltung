@@ -5,76 +5,64 @@ using namespace std;
 #include "../date.h"
 #include "medium.h"
 
-void Medium::setID(string id)
-{
+// SETTER & GETTER
+
+void Medium::setID(string id) {
   this->id=id;
 }
 
-string Medium::getID()
-{
+string Medium::getID() {
   return id;
 }
 
-void Medium::setTitel(string titel)
-{
+void Medium::setTitel(string titel) {
   this->titel=titel;
 }
 
-string Medium::getTitel()
-{
+string Medium::getTitel() {
   return titel;
 }
 
-void Medium::setKennzeichen(string kennzeichen)
-{
+void Medium::setKennzeichen(string kennzeichen) {
   this->kennzeichen=kennzeichen;
 }
 
-string Medium::getKennzeichen()
-{
+string Medium::getKennzeichen() {
   return kennzeichen;
 }
 
-void Medium::setAusleihDatum(int jahr, int monat, int tag)
-{
+void Medium::setAusleihDatum(int jahr, int monat, int tag) {
   ausleihDatum.setJahr(jahr);
   ausleihDatum.setMonat(monat);
   ausleihDatum.setTag(tag);
 }
 
-Date Medium::getAusleihDatum()
-{
+Date Medium::getAusleihDatum() {
   return ausleihDatum;
 }
 
-void Medium::setRueckgabeDatum(int jahr, int monat, int tag)
-{
+void Medium::setRueckgabeDatum(int jahr, int monat, int tag) {
   rueckgabeDatum.setJahr(jahr);
   rueckgabeDatum.setMonat(monat);
   rueckgabeDatum.setTag(tag);
 }
 
-Date Medium::getRueckgabeDatum()
-{
+Date Medium::getRueckgabeDatum() {
   return rueckgabeDatum;
 }
 
-void Medium::setAusleihStatus(bool ausleihStatus)
-{
+void Medium::setAusleihStatus(bool ausleihStatus) {
   this->ausleihStatus=ausleihStatus;
 }
 
-bool Medium::getAusleihStatus()
-{
+bool Medium::getAusleihStatus() {
   return ausleihStatus;
 }
 
-void Medium::setAusleiher(string pid)
-{
+void Medium::setAusleiher(string pid) {
   this->pid=pid;
 }
 
-string Medium::getAusleiher()
-{
+string Medium::getAusleiher() {
   return pid;
 }

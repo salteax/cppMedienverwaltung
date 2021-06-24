@@ -6,8 +6,9 @@ using namespace std;
 #include "medium.h"
 #include "cd.h"
 
-CD::CD()
-{
+// KONSTRUKTOREN
+
+CD::CD() {
   Date ausleihDatum;
   Date rueckgabeDatum;
   setID("");
@@ -20,8 +21,7 @@ CD::CD()
   this->dauer=0;
 }
 
-CD::CD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int dauer)
-{
+CD::CD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int dauer) {
   setID(id);
   setTitel(titel);
   setKennzeichen("cd");
@@ -32,12 +32,12 @@ CD::CD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int 
   this->dauer=dauer;
 }
 
-void CD::setDauer(int dauer)
-{
+// SETTER & GETTER
+
+void CD::setDauer(int dauer) {
   this->dauer=dauer;
 }
 
-int CD::getDauer()
-{
+int CD::getDauer() {
   return dauer;
 }

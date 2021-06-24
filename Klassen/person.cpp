@@ -7,16 +7,14 @@ using namespace std;
 
 // KONSTRUKTOREN
 
-Person::Person()
-{
+Person::Person() {
   pid=vorname=nachname=geschlecht="";
   geburtsdatum.setJahr(0);
   geburtsdatum.setMonat(0);
   geburtsdatum.setTag(0);
 }
 
-Person::Person(string pid, string vorname, string nachname, string geschlecht, int jahr, int monat, int tag)
-{
+Person::Person(string pid, string vorname, string nachname, string geschlecht, int jahr, int monat, int tag) {
   this->pid = pid;
   this->vorname = vorname;
   this->nachname = nachname;
@@ -28,62 +26,51 @@ Person::Person(string pid, string vorname, string nachname, string geschlecht, i
 
 // SETTER & GETTER
 
-void Person::setPID(string pid)
-{
+void Person::setPID(string pid) {
   this->pid=pid;
 }
 
-string Person::getPID()
-{
+string Person::getPID() {
   return pid;
 }
 
-void Person::setVorname(string vorname)
-{
+void Person::setVorname(string vorname) {
   this->vorname=vorname;
 }
 
-string Person::getVorname()
-{
+string Person::getVorname() {
   return vorname;
 }
 
-void Person::setNachname(string nachname)
-{
+void Person::setNachname(string nachname) {
   this->nachname=nachname;
 }
 
-string Person::getNachname()
-{
+string Person::getNachname() {
   return nachname;
 }
 
-void Person::setGeschlecht(string geschlecht)
-{
+void Person::setGeschlecht(string geschlecht) {
   this->geschlecht=geschlecht;
 }
 
-string Person::getGeschlecht()
-{
+string Person::getGeschlecht() {
   return geschlecht;
 }
 
-void Person::setGeburtsdatum(int jahr, int monat, int tag)
-{
+void Person::setGeburtsdatum(int jahr, int monat, int tag) {
   geburtsdatum.setJahr(jahr);
   geburtsdatum.setMonat(monat);
   geburtsdatum.setTag(tag);
 }
 
-Date Person::getGeburtsdatum()
-{
+Date Person::getGeburtsdatum() {
   return geburtsdatum;
 }
 
 // FUNKTIONEN
 
-int Person::getAlter()
-{
+int Person::getAlter() {
   int dd, dm, dy;
 
   time_t ttime = time(0);

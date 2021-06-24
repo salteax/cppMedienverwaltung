@@ -6,8 +6,9 @@ using namespace std;
 #include "medium.h"
 #include "buch.h"
 
-Buch::Buch()
-{
+// KONSTRUKTOREN
+
+Buch::Buch() {
   Date ausleihDatum;
   Date rueckgabeDatum;
   setID("");
@@ -22,8 +23,7 @@ Buch::Buch()
   this->seitenanzahl=0;
 }
 
-Buch::Buch(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl)
-{
+Buch::Buch(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl) {
   setID(id);
   setTitel(titel);
   setKennzeichen("b");
@@ -36,32 +36,28 @@ Buch::Buch(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, 
   this->seitenanzahl=seitenanzahl;
 }
 
-void Buch::setAutor(string autor)
-{
+// SETTER & GETTER
+
+void Buch::setAutor(string autor) {
   this->autor=autor;
 }
 
-string Buch::getAutor()
-{
+string Buch::getAutor() {
   return autor;
 }
 
-void Buch::setVerlag(string verlag)
-{
+void Buch::setVerlag(string verlag) {
   this->verlag=verlag;
 }
 
-string Buch::getVerlag()
-{
+string Buch::getVerlag() {
   return verlag;
 }
 
-void Buch::setSeitenanzahl(int seitenanzahl)
-{
+void Buch::setSeitenanzahl(int seitenanzahl) {
   this->seitenanzahl=seitenanzahl;
 }
 
-int Buch::getSeitenanzahl()
-{
+int Buch::getSeitenanzahl() {
   return seitenanzahl;
 }

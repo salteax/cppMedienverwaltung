@@ -6,8 +6,9 @@ using namespace std;
 #include "medium.h"
 #include "dvd.h"
 
-DVD::DVD()
-{
+// KONSTRUKTOREN
+
+DVD::DVD() {
   Date ausleihDatum;
   Date rueckgabeDatum;
   setID("");
@@ -22,8 +23,7 @@ DVD::DVD()
   this->genre="";
 }
 
-DVD::DVD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre)
-{
+DVD::DVD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre) {
   setID(id);
   setTitel(titel);
   setKennzeichen("dvd");
@@ -37,32 +37,27 @@ DVD::DVD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, in
 }
 
 // SETTER & GETTER
-void DVD::setFSK(int fsk)
-{
+
+void DVD::setFSK(int fsk) {
   this->fsk=fsk;
 }
 
-int DVD::getFSK()
-{
+int DVD::getFSK() {
   return fsk;
 }
 
-void DVD::setDauer(int dauer)
-{
+void DVD::setDauer(int dauer) {
   this->dauer=dauer;
 }
 
-int DVD::getDauer()
-{
+int DVD::getDauer() {
   return dauer;
 }
 
-void DVD::setGenre(string genre)
-{
+void DVD::setGenre(string genre) {
   this->genre=genre;
 }
 
-string DVD::getGenre()
-{
+string DVD::getGenre() {
   return genre;
 }
