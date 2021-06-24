@@ -17,6 +17,7 @@ public:
   // FUNKTIONEN
   void addElement(T value);
   void removeElement(int i);
+  void clear();
   T& operator[](int i);
 private:
   vector<T> buffer;
@@ -61,6 +62,13 @@ void Liste<T>::removeElement(int i)
 {
   buffer.erase(i);
   size = size - 1;
+}
+
+template <class T>
+void Liste<T>::clear()
+{
+  buffer.clear();
+  size = 0;
 }
 
 template <class T>

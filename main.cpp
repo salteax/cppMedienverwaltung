@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream>
+#include <cstring>
 using namespace std;
 #include "./Klassen/person.h"
 #include "./Klassen/date.h"
@@ -48,7 +49,7 @@ void addPerson(string pid, string vorname, string nachname, string geschlecht, i
   pListe.addElement(tempPerson);
 }
 
-void fileToListe() {
+bool fileToListe(string pD, string mD) {
   // Objektbezogene Variablen
   string jahr1, monat1, tag1, jahr2, monat2, tag2;
   string pid, vorname, nachname, geschlecht;
@@ -59,10 +60,11 @@ void fileToListe() {
   string line, c;
 
   // Personen-Daten einlesen
-  file.open("./Daten/person.dat");
+  file.open(pD);
 
   if(file.fail()) {
-    cout << "Datei konnte nicht geoeffnet werden!" << endl;
+    cout << "<!> Datei '" << pD << "' konnte nicht geoeffnet werden. Abbruch. <!>" << endl;
+    return false;
   }
 
   istringstream my_stream;
@@ -77,10 +79,11 @@ void fileToListe() {
   file.close();
 
   // Medien-Daten einlesen
-  file.open("./Daten/medien.dat");
+  file.open(mD);
 
   if(file.fail()) {
-    cout << "Datei konnte nicht geoeffnet werden!" << endl;
+    cout << "<!> Datei '" << mD << "' konnte nicht geoeffnet werden. Abbruch. <!>" << endl;
+    return false;
   }
 
   while (getline(file,line)) {
@@ -117,13 +120,16 @@ void fileToListe() {
         cout << "Kein gueltiger Typ." << endl;
     }
   }
+  return true;
 }
 
-void listeToFile() {
+bool listeToFile(string pD, string mD) {
   ofstream file;
-  file.open("./Daten/person.dat");
+  file.open(pD);
+
   if(file.fail()) {
-    cout << "Datei konnte nicht geoeffnet werden!" << endl;
+    cout << "<!> Datei '" << pD << "' konnte nicht geoeffnet werden. Abbruch. <!>" << endl;
+    return false;
   }
 
   file.seekp(0);
@@ -133,9 +139,11 @@ void listeToFile() {
   }
   file.close();
 
-  file.open("./Daten/medien.dat");
+  file.open(mD);
+
   if(file.fail()) {
-    cout << "Datei konnte nicht geoeffnet werden!" << endl;
+    cout << "<!> Datei '" << mD << "' konnte nicht geoeffnet werden. Abbruch. <!>" << endl;
+    return false;
   }
 
   file.seekp(0);
@@ -153,6 +161,7 @@ void listeToFile() {
   }
 
   file.close();
+  return true;
 }
 
 bool aus_rueckgabe(char c, string id, string pid) {
@@ -228,27 +237,159 @@ bool aus_rueckgabe(char c, string id, string pid) {
   }
 }
 
-void open() {
-  cout << "Start" << endl;
+string setFile() {
+  string filename;
+  fstream file;
 
-  cout << "Einlesen der Datei - ANFANG" << endl;
-  fileToListe();
-  cout << "Einlesen der Datei - ENDE" << endl;
+  getline(cin, filename);
+  file.open(filename);
+
+  if(file.fail()) {
+    file.close();
+    file.open(filename, ios::out);
+    if(!file) {
+      cout << "<!> Datei '" << filename << "' konnte nicht erstellt werden. Abbruch. <!>" << endl;
+      return "";
+    } else {
+      cout << "<I> Datei '" << filename << "' wurde erstellt. <I>" << endl;
+    }
+  } else {
+    file.close();
+  }
+
+  return filename;
 }
 
-void close() {
-  cout << "Auslesen der Listen - ANFANG" << endl;
-  listeToFile();
-  cout << "Auslesen der Listen - ENDE" << endl;
+bool fileSave(string pD, string mD) {
+  string answer;
 
-  cout << "Ende" << endl;
+  cout << "<?> Wollen sie die Daten aus den Listen in die gleichen Dateien schreiben aus den gelesen wurde? (j/n) <?>" << endl;
+  getline(cin, answer);
+  if (answer == "j") {
+    listeToFile(pD, mD);
+    cout << "<I> Listen wurden in Dateien gespeichert. <I>" << endl;
+    return true;
+  } else if (answer == "n") {
+    return true;
+  } else {
+    cout << "<!> Keine gültige Antwort. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
+    return false;
+  }
 }
 
-int main(int argc, char*argv[]) {
+int main() {
   // Compiler-Command
   //g++ main.cpp Klassen/person.cpp Klassen/date.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp
 
-  open();
-  close();
+  bool running = true, fileLoaded = false, fileSaved = false;
+  string pD, mD;
+  string argument, answer;
+
+  cout << R"(.________________________________.
+|                                |
+|          C++ Programm          |
+|        Medienverwaltung        |
+|             V1.0.0             |
+|________________________________|
+)" << endl;
+
+  cout << "<I> Geben sie 'h' ein für eine Liste aller Funktionen, ihrer funktionsweise und den dazugehörigen Parametern. <I>" << endl;
+
+  while (running) {
+    getline(cin, argument);
+
+    if(argument == "h") {
+      cout << "<I>" << endl;
+      cout << "'h'\t- Auflistung aller Argumente und den zugehörigen Funktionen." << endl;
+      cout << "'q'\t- Beendet das Programm." << endl;
+      cout << "'of'\t- Öffnet Dateien und lädt die Daten in die entsprechenden Listen." << endl;
+      cout << "'sf'\t- Speichert die Daten aus den Listen in die entsprechenden Dateien." << endl;
+      cout << "'l'\t- Listet alle Elemente aus der entsprechenden Liste auf." << endl;
+      cout << "'n'\t- Erstellt ein neues Element und fügt es der entsprechenden Liste hinzu." << endl;
+      cout << "'d'\t- Löscht ein Element aus entsprechenden Liste." << endl;
+      cout << "'s'\t- Sucht ein Element in entsprechenden Liste und gibt es aus falls es gefunden wurde." << endl;
+      cout << "'a'\t- Zum Verleih von Medien." << endl;
+      cout << "'r'\t- Zur Rückgabe von Medien." << endl;
+      cout << "<I>\t- Kennzeichnet Informationen. Gibt ihnen ggf. auch bestätigung, dass etwas funktioniert hat." << endl;
+      cout << "<?>\t- Kennzeichnet eine Abfrage. Wartet auf ihre Eingabe." << endl;
+      cout << "<!>\t- Kennzeichnet ein Problem. Gibt ihnen Information darüber, dass etwas nicht funktioniert hat." << endl;
+      cout << "<I>" << endl;
+    } else if(argument == "q") {
+      if (fileLoaded && (fileSaved == false)) {
+        cout << "<?> Wollen sie ihre Änderungen speichern? (j/n) <?>" << endl;
+        getline(cin, answer);
+
+        if (answer == "j") {
+          fileSaved = fileSave(pD, mD);
+        }
+      }
+      cout << "<I> Das Programm wird nun beendet. <I>" << endl;
+      running = false;
+    } else if(argument == "of") {
+      if (fileLoaded) {
+        pListe.clear();
+        bListe.clear();
+        cListe.clear();
+        dListe.clear();
+      }
+      cout << "<?> Datei(pfad) zur Verwaltung der Personen: <?>" << endl;
+      pD = setFile();
+      cout << "<?> Datei(pfad) zur Verwaltung der Medien: <?>" << endl;
+      mD = setFile();
+      if(pD == mD) {
+        cout << "<!> Dateien dürfen nicht den selben Dateinamen haben. Abbruch. <!>" << endl;
+      } else if((pD != "") && (mD != "")) {
+        fileToListe(pD, mD);
+        fileLoaded = true;
+        cout << "<I> Dateien wurden in Liste geladen. <I>" << endl;
+      } else {
+        cout << "<!> Fehler beim erstellen der Dateien. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
+      }
+    } else if(argument == "sf") {
+      if (fileLoaded) {
+        fileSaved = fileSave(pD, mD);
+      } else {
+        cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
+      }
+    } else if(argument == "l") {
+      if (fileLoaded) {
+
+      } else {
+        cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
+      }
+    } else if(argument == "n") {
+      if (fileLoaded) {
+
+      } else {
+        cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
+      }
+    } else if(argument == "d") {
+      if (fileLoaded) {
+
+      } else {
+        cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
+      }
+    } else if(argument == "s") {
+      if (fileLoaded) {
+
+      } else {
+        cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
+      }
+    } else if(argument == "a") {
+      if (fileLoaded) {
+
+      } else {
+        cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
+      }
+    } else if(argument == "r") {
+      if (fileLoaded) {
+
+      } else {
+        cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
+      }
+    } else {
+      cout << "<!> Das Argument '" << argument << "' ist kein gültiges Argument, für eine Liste aller Argumente und der zugehörigen Parameter nutzen sie 'h'. <!>" << endl;
+    }
+  }
   return 0;
 }
