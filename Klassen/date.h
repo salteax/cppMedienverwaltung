@@ -1,3 +1,11 @@
+/************************************
+*                                   *
+*         Name: Paul Koreng         *
+*       Matrikelnummer: 49224       *
+*      Studiengruppe: 20/041/02     *
+*                                   *
+************************************/
+
 #ifndef DATE_H
 #define DATE_H
 class Date {

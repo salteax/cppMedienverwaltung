@@ -1,3 +1,11 @@
+/************************************
+*                                   *
+*         Name: Paul Koreng         *
+*       Matrikelnummer: 49224       *
+*      Studiengruppe: 20/041/02     *
+*                                   *
+************************************/
+
 #include <iostream>
 #include <iomanip>
 using namespace std;
