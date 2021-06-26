@@ -114,3 +114,10 @@ int Person::getAlter() {
 
   return dy;
 }
+
+// OPERATOR
+
+ostream& operator<<(ostream& os, Person& p) {
+  os << p.getPID() << ", " << p.getVorname() << " " << p.getNachname() << ", " << p.getGeschlecht() << ", " << p.getGeburtsdatum();
+  return os;
+}

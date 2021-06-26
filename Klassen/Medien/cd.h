@@ -20,6 +20,8 @@ public:
   // SETTER & GETTER
   void setDauer(int dauer);
   int getDauer();
+  // OPERATOR
+  friend ostream& operator<<(ostream& os, CD& c);
 private:
   int dauer;
 };

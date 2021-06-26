@@ -24,6 +24,8 @@ public:
   string getVerlag();
   void setSeitenanzahl(int seitenanzahl);
   int getSeitenanzahl();
+  // OPERATOR
+  friend ostream& operator<<(ostream& os, Buch& b);
 private:
   string autor, verlag;
   int seitenanzahl;

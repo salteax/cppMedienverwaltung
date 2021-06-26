@@ -69,3 +69,14 @@ void Buch::setSeitenanzahl(int seitenanzahl) {
 int Buch::getSeitenanzahl() {
   return seitenanzahl;
 }
+
+// OPERATOR
+
+ostream& operator<<(ostream& os, Buch& b) {
+  if (b.getAusleihStatus()) {
+    os << b.getID() << ", " << b.getTitel() << ", " << b.getAutor() << ", " << b.getVerlag() << ", " << b.getSeitenanzahl() << ", " << "ausgeliehen" << ", " << b.getAusleiher() << ", " << b.getAusleihDatum() << ", " << b.getRueckgabeDatum();
+  } else {
+    os << b.getID() << ", " << b.getTitel() << ", " << b.getAutor() << ", " << b.getVerlag() << ", " << b.getSeitenanzahl() << ", " << "nicht ausgeliehen";
+  }
+  return os;
+}

@@ -49,3 +49,14 @@ void CD::setDauer(int dauer) {
 int CD::getDauer() {
   return dauer;
 }
+
+// OPERATOR
+
+ostream& operator<<(ostream& os, CD& c) {
+  if (c.getAusleihStatus()) {
+    os << c.getID() << ", " << c.getTitel() << ", " << c.getDauer() << ", " << "ausgeliehen" << ", " << c.getAusleiher() << ", " << c.getAusleihDatum() << ", " << c.getRueckgabeDatum();
+  } else {
+    os << c.getID() << ", " << c.getTitel() << ", " << c.getDauer() << ", " << "nicht ausgeliehen";
+  }
+  return os;
+}

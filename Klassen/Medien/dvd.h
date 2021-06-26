@@ -24,6 +24,8 @@ public:
   int getDauer();
   void setGenre(string genre);
   string getGenre();
+  // OPERATOR
+  friend ostream& operator<<(ostream& os, DVD& d);
 private:
   int fsk, dauer;
   string genre;

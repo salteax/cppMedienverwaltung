@@ -69,3 +69,14 @@ void DVD::setGenre(string genre) {
 string DVD::getGenre() {
   return genre;
 }
+
+// OPERATOR
+
+ostream& operator<<(ostream& os, DVD& d) {
+  if (d.getAusleihStatus()) {
+    os << d.getID() << ", " << d.getTitel() << ", " << d.getGenre() << ", " << d.getFSK() << ", " << d.getDauer() << ", " << "ausgeliehen" << ", " << d.getAusleiher() << ", " << d.getAusleihDatum() << ", " << d.getRueckgabeDatum();
+  } else {
+    os << d.getID() << ", " << d.getTitel() << ", " << d.getGenre() << ", " << d.getFSK() << ", " << d.getDauer() << ", " << "nicht ausgeliehen";
+  }
+  return os;
+}

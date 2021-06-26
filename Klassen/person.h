@@ -28,6 +28,8 @@ public:
   Date getGeburtsdatum();
   // FUNKTIONEN
   int getAlter(); // Funktion zum ueberpruefun des alter ob bei CDs zb Alter ok ist wegen vergabe
+  // OPERATOR
+  friend ostream& operator<<(ostream& os, Person& p);
 private:
   string pid, vorname, nachname, geschlecht;
   Date geburtsdatum;
