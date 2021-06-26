@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <cstring>
+#include <algorithm>
 using namespace std;
 #include "./Klassen/person.h"
 #include "./Klassen/date.h"
@@ -39,6 +40,14 @@ Liste<Buch> bListe;
 Liste<CD> cListe;
 Liste<DVD> dListe;
 
+string pD, mD;
+bool fileLoaded = false, fileSaved = false;
+
+void addPerson(string pid, string vorname, string nachname, string geschlecht, int jahr, int monat, int tag) {
+  Person tempPerson(pid, vorname, nachname, geschlecht, jahr, monat, tag);
+  pListe.addElement(tempPerson);
+}
+
 void addMedium(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl) {
   Buch tempBuch(id, titel, jahrA, monatA, tagA, jahrR, monatR, tagR, ausleihStatus, ausleiher, autor, verlag, seitenanzahl);
   bListe.addElement(tempBuch);
@@ -54,12 +63,7 @@ void addMedium(string id, string titel, int jahrA, int monatA, int tagA, int jah
   dListe.addElement(tempDVD);
 }
 
-void addPerson(string pid, string vorname, string nachname, string geschlecht, int jahr, int monat, int tag) {
-  Person tempPerson(pid, vorname, nachname, geschlecht, jahr, monat, tag);
-  pListe.addElement(tempPerson);
-}
-
-bool fileToListe(string pD, string mD) {
+bool fileToListe() {
   // Objektbezogene Variablen
   string jahr1, monat1, tag1, jahr2, monat2, tag2;
   string pid, vorname, nachname, geschlecht;
@@ -133,7 +137,7 @@ bool fileToListe(string pD, string mD) {
   return true;
 }
 
-bool listeToFile(string pD, string mD) {
+bool listeToFile() {
   ofstream file;
   file.open(pD);
 
@@ -270,13 +274,43 @@ string setFile() {
   return filename;
 }
 
-bool fileSave(string pD, string mD) {
+string replaceAll(string s, char a, char b) {
+  replace(s.begin(),s.end(), a, b);
+  return s;
+}
+
+bool loadFile() {
+  cout << "<?> Datei(pfad) zur Verwaltung der Personen: <?>" << endl;
+  pD = setFile();
+  cout << "<?> Datei(pfad) zur Verwaltung der Medien: <?>" << endl;
+  mD = setFile();
+
+  if (fileLoaded) {
+    pListe.clear();
+    bListe.clear();
+    cListe.clear();
+    dListe.clear();
+  }
+  if(pD == mD) {
+    cout << "<!> Dateien dürfen nicht den selben Dateinamen haben. Abbruch. <!>" << endl;
+    return false;
+  } else if((pD != "") && (mD != "")) {
+    fileToListe();
+    cout << "<I> Dateien wurden in Liste geladen. <I>" << endl;
+    return true;
+  } else {
+    cout << "<!> Fehler beim erstellen der Dateien. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
+    return false;
+  }
+}
+
+bool saveFile() {
   string answer;
 
   cout << "<?> Wollen sie die Daten aus den Listen in die gleichen Dateien schreiben aus den gelesen wurde? (j/n) <?>" << endl;
   getline(cin, answer);
   if (answer == "j") {
-    listeToFile(pD, mD);
+    listeToFile();
     cout << "<I> Listen wurden in Dateien gespeichert. <I>" << endl;
     return true;
   } else if (answer == "n") {
@@ -287,13 +321,117 @@ bool fileSave(string pD, string mD) {
   }
 }
 
+void list() {
+  string answer;
+
+  cout << "<?> Welche Liste möchten sie ausgeben? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl;
+  getline(cin, answer);
+
+  if ((answer == "p") || (answer == "person" )) {
+    for(int i = 0; i < pListe.getSize(); i++) {
+      cout << i+1 << ": " << pListe[i] << endl;
+    }
+  } else if ((answer == "b") || (answer == "buch" )) {
+    for(int i = 0; i < bListe.getSize(); i++) {
+      cout << i+1 << ": " << bListe[i] << endl;
+    }
+  } else if ((answer == "c") || (answer == "cd" )) {
+    for(int i = 0; i < cListe.getSize(); i++) {
+      cout << i+1 << ": " << cListe[i] << endl;
+    }
+  } else if ((answer == "d") || (answer == "dvd" )) {
+    for(int i = 0; i < dListe.getSize(); i++) {
+      cout << i+1 << ": " << dListe[i] << endl;
+    }
+  } else {
+    cout << "<!> '" << answer << "' ist kein gültiger Parameter. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
+  }
+}
+
+void search() {
+  string answer, searchArgument;
+  int foundArguments = 0;
+
+  cout << "<?> In welcher Liste möchten sie suchen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl;
+  getline(cin, answer);
+  cout << "<?> Geben sie den Begriff ein nach dem sie suchen möchten. <?>" << endl;
+  getline(cin, searchArgument);
+
+  searchArgument = replaceAll(searchArgument, ' ', '_');
+
+  if ((answer == "p") || (answer == "person" )) {
+    for(int i = 0; i < pListe.getSize(); i++) {
+      if ((pListe[i].getPID() == searchArgument) ||  (pListe[i].getVorname() == searchArgument) || (pListe[i].getNachname() == searchArgument)) {
+        cout << foundArguments+1 << ": " << pListe[i] << endl;
+        foundArguments++;
+      }
+    }
+  } else if ((answer == "b") || (answer == "buch" )) {
+    for(int i = 0; i < bListe.getSize(); i++) {
+      if ((bListe[i].getID() == searchArgument) ||  (bListe[i].getTitel() == searchArgument) || (bListe[i].getAusleiher() == searchArgument) || (bListe[i].getAutor() == searchArgument) || (bListe[i].getVerlag() == searchArgument) || (to_string(bListe[i].getSeitenanzahl()) == searchArgument)) {
+        cout << foundArguments+1 << ": " << bListe[i] << endl;
+        foundArguments++;
+      }
+    }
+  } else if ((answer == "c") || (answer == "cd" )) {
+    for(int i = 0; i < cListe.getSize(); i++) {
+      if ((cListe[i].getID() == searchArgument) ||  (cListe[i].getTitel() == searchArgument) || (cListe[i].getAusleiher() == searchArgument) || (to_string(cListe[i].getDauer()) == searchArgument)) {
+        cout << foundArguments+1 << ": " << cListe[i] << endl;
+        foundArguments++;
+      }
+    }
+  } else if ((answer == "d") || (answer == "dvd" )) {
+    for(int i = 0; i < dListe.getSize(); i++) {
+      if ((dListe[i].getID() == searchArgument) ||  (dListe[i].getTitel() == searchArgument) || (dListe[i].getAusleiher() == searchArgument) || (to_string(dListe[i].getFSK()) == searchArgument) || (to_string(dListe[i].getDauer()) == searchArgument) || (dListe[i].getGenre() == searchArgument)) {
+        cout << foundArguments+1 << ": " << dListe[i] << endl;
+        foundArguments++;
+      }
+    }
+  } else {
+    cout << "<!> '" << answer << "' ist kein gültiger Parameter. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
+  }
+  if (foundArguments == 0) {
+    cout << "<!> '" << searchArgument << "' wurde nicht gefunden. <!>" << endl;
+  }
+
+}
+
+void help() {
+  cout << "'h'\t- Auflistung aller Argumente und den zugehörigen Funktionen." << endl;
+  cout << "'q'\t- Beendet das Programm." << endl;
+  cout << "'of'\t- Öffnet Dateien und lädt die Daten in die entsprechenden Listen." << endl;
+  cout << "'sf'\t- Speichert die Daten aus den Listen in die entsprechenden Dateien." << endl;
+  cout << "'l'\t- Listet alle Elemente aus der entsprechenden Liste auf." << endl;
+  cout << "'n'\t- Erstellt ein neues Element und fügt es der entsprechenden Liste hinzu." << endl;
+  cout << "'d'\t- Löscht ein Element aus entsprechenden Liste." << endl;
+  cout << "'s'\t- Sucht ein Element in entsprechenden Liste und gibt es aus falls es gefunden wurde." << endl;
+  cout << "'a'\t- Zum Verleih von Medien." << endl;
+  cout << "'r'\t- Zur Rückgabe von Medien." << endl;
+  cout << "<I>\t- Kennzeichnet Informationen. Gibt ihnen ggf. auch bestätigung, dass etwas funktioniert hat." << endl;
+  cout << "<?>\t- Kennzeichnet eine Abfrage. Wartet auf ihre Eingabe." << endl;
+  cout << "<!>\t- Kennzeichnet ein Problem. Gibt ihnen Information darüber, dass etwas nicht funktioniert hat." << endl;
+}
+
+bool quit() {
+  string answer;
+
+  if (fileLoaded && (fileSaved == false)) {
+    cout << "<?> Wollen sie ihre Änderungen speichern? (j/n) <?>" << endl;
+    getline(cin, answer);
+    if (answer == "j") {
+      fileSaved = saveFile();
+    }
+  }
+  cout << "<I> Das Programm wird nun beendet. <I>" << endl;
+  return false;
+}
+
 int main() {
   // Compiler-Command
   //g++ main.cpp Klassen/person.cpp Klassen/date.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp
 
-  bool running = true, fileLoaded = false, fileSaved = false;
-  string pD, mD;
-  string argument, answer;
+  bool running = true;
+  string argument;
 
   cout << R"(.________________________________.
 |                                |
@@ -309,83 +447,21 @@ int main() {
     getline(cin, argument);
 
     if(argument == "h") {
-      cout << "'h'\t- Auflistung aller Argumente und den zugehörigen Funktionen." << endl;
-      cout << "'q'\t- Beendet das Programm." << endl;
-      cout << "'of'\t- Öffnet Dateien und lädt die Daten in die entsprechenden Listen." << endl;
-      cout << "'sf'\t- Speichert die Daten aus den Listen in die entsprechenden Dateien." << endl;
-      cout << "'l'\t- Listet alle Elemente aus der entsprechenden Liste auf." << endl;
-      cout << "'n'\t- Erstellt ein neues Element und fügt es der entsprechenden Liste hinzu." << endl;
-      cout << "'d'\t- Löscht ein Element aus entsprechenden Liste." << endl;
-      cout << "'s'\t- Sucht ein Element in entsprechenden Liste und gibt es aus falls es gefunden wurde." << endl;
-      cout << "'a'\t- Zum Verleih von Medien." << endl;
-      cout << "'r'\t- Zur Rückgabe von Medien." << endl;
-      cout << "<I>\t- Kennzeichnet Informationen. Gibt ihnen ggf. auch bestätigung, dass etwas funktioniert hat." << endl;
-      cout << "<?>\t- Kennzeichnet eine Abfrage. Wartet auf ihre Eingabe." << endl;
-      cout << "<!>\t- Kennzeichnet ein Problem. Gibt ihnen Information darüber, dass etwas nicht funktioniert hat." << endl;
+      help();
     } else if(argument == "q") {
-        if (fileLoaded && (fileSaved == false)) {
-          cout << "<?> Wollen sie ihre Änderungen speichern? (j/n) <?>" << endl;
-          getline(cin, answer);
-          if (answer == "j") {
-            fileSaved = fileSave(pD, mD);
-          }
-        }
-        cout << "<I> Das Programm wird nun beendet. <I>" << endl;
-        running = false;
+      running = quit();
     } else if(argument == "of") {
-        if (fileLoaded) {
-          pListe.clear();
-          bListe.clear();
-          cListe.clear();
-          dListe.clear();
-        }
-        cout << "<?> Datei(pfad) zur Verwaltung der Personen: <?>" << endl;
-        pD = setFile();
-        cout << "<?> Datei(pfad) zur Verwaltung der Medien: <?>" << endl;
-        mD = setFile();
-        if(pD == mD) {
-          cout << "<!> Dateien dürfen nicht den selben Dateinamen haben. Abbruch. <!>" << endl;
-        } else if((pD != "") && (mD != "")) {
-          fileToListe(pD, mD);
-          fileLoaded = true;
-          cout << "<I> Dateien wurden in Liste geladen. <I>" << endl;
-        } else {
-          cout << "<!> Fehler beim erstellen der Dateien. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
-        }
+      fileLoaded = loadFile();
     } else if(argument == "sf") {
-        if (fileLoaded) {
-          fileSaved = fileSave(pD, mD);
-        } else {
-          cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
-        }
+      if (fileLoaded) {
+        fileSaved = saveFile();
+      } else {
+        cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
+      }
     } else if(argument == "l") {
       if (fileLoaded) {
-        cout << "<?> Welche Liste möchten sie ausgeben? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl;
-        getline(cin, answer);
-        if ((answer == "p") || (answer == "person" )) {
-          for(int i = 0; i < pListe.getSize(); i++) {
-            cout << i+1 << ": " << pListe[i] << endl;
-          }
-          cout << "<I> In der Datei '" << pD << "' befinden sich " << pListe.getSize() << " Personen. <I>" << endl;
-        } else if ((answer == "b") || (answer == "buch" )) {
-          for(int i = 0; i < bListe.getSize(); i++) {
-            cout << i+1 << ": " << bListe[i] << endl;
-          }
-          cout << "<I> In der Datei '" << mD << "' befinden sich " << bListe.getSize() << " Bücher. <I>" << endl;
-        } else if ((answer == "c") || (answer == "cd" )) {
-          for(int i = 0; i < cListe.getSize(); i++) {
-            cout << i+1 << ": " << cListe[i] << endl;
-          }
-          cout << "<I> In der Datei '" << mD << "' befinden sich " << cListe.getSize() << " CDs. <I>" << endl;
-        } else if ((answer == "d") || (answer == "dvd" )) {
-          for(int i = 0; i < dListe.getSize(); i++) {
-            cout << i+1 << ": " << dListe[i] << endl;
-          }
-          cout << "<I> In der Datei '" << mD << "' befinden sich " << dListe.getSize() << " DVDs. <I>" << endl;
-        } else {
-            cout << "<!> '" << answer << "' ist kein gültiger Parameter. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
-          }
-        } else {
+        list();
+      } else {
         cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
       }
     } else if(argument == "n") {
@@ -402,7 +478,7 @@ int main() {
       }
     } else if(argument == "s") {
       if (fileLoaded) {
-
+        search();
       } else {
         cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
       }
