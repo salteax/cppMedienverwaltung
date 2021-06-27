@@ -6,8 +6,6 @@
 *                                   *
 ************************************/
 
-#include "../person.h"
-#include "../date.h"
 #include "medium.h"
 
 #ifndef _BUCH_H_

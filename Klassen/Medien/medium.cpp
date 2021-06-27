@@ -9,8 +9,6 @@
 #include <iostream>
 #include <iomanip>
 using namespace std;
-#include "../person.h"
-#include "../date.h"
 #include "medium.h"
 
 // SETTER & GETTER

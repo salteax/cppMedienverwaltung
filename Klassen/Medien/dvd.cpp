@@ -9,16 +9,12 @@
 #include <iostream>
 #include <iomanip>
 using namespace std;
-#include "../person.h"
-#include "../date.h"
 #include "medium.h"
 #include "dvd.h"
 
 // KONSTRUKTOREN
 
 DVD::DVD() {
-  Date ausleihDatum;
-  Date rueckgabeDatum;
   setID("");
   setTitel("");
   setKennzeichen("dvd");

@@ -14,7 +14,6 @@
 #include <algorithm>
 using namespace std;
 #include "./Klassen/person.h"
-#include "./Klassen/date.h"
 #include "./Klassen/liste.h"
 #include "./Klassen/Medien/medium.h"
 #include "./Klassen/Medien/buch.h"
@@ -43,8 +42,8 @@ Liste<DVD> dListe;
 string pD, mD;
 bool fileLoaded = false, fileSaved = false;
 
-void addPerson(string pid, string vorname, string nachname, string geschlecht, int jahr, int monat, int tag) {
-  Person tempPerson(pid, vorname, nachname, geschlecht, jahr, monat, tag);
+void addPerson(string pid, string vorname, string nachname) {
+  Person tempPerson(pid, vorname, nachname);
   pListe.addElement(tempPerson);
 }
 
@@ -65,8 +64,7 @@ void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, in
 
 bool fileToListe() {
   // Objektbezogene Variablen
-  string jahr, monat, tag;
-  string pid, vorname, nachname, geschlecht;
+  string pid, vorname, nachname;
   string id, titel, ausleiher, autor, verlag, seitenanzahl, dauer, fsk, genre;
   bool ausleihStatus;
   // Dateiarbeit Variablen
@@ -85,8 +83,8 @@ bool fileToListe() {
 
   while (getline(file,line)) {
     my_stream.str(line);
-    my_stream >> pid >> vorname >> nachname >> geschlecht >> jahr >> monat >> tag >> c;
-    addPerson(pid, vorname, nachname, geschlecht, stoi(jahr), stoi(monat), stoi(tag));
+    my_stream >> pid >> vorname >> nachname >> c;
+    addPerson(pid, vorname, nachname);
     my_stream.clear();
   }
 
@@ -149,7 +147,7 @@ bool listeToFile() {
   file.seekp(0);
 
   for (int i = 0; i < pListe.getSize(); i++) {
-    file << pListe[i].getPID() << " " << pListe[i].getVorname() << " " << pListe[i].getNachname() << " " << pListe[i].getGeschlecht() << " " << pListe[i].getGeburtsdatum().getJahr() << " " << pListe[i].getGeburtsdatum().getMonat() << " " << pListe[i].getGeburtsdatum().getTag() << endl;
+    file << pListe[i].getPID() << " " << pListe[i].getVorname() << " " << pListe[i].getNachname() << endl;
   }
   file.close();
 
@@ -340,18 +338,43 @@ void list() {
     for(int i = 0; i < pListe.getSize(); i++) {
       cout << i+1 << ": " << pListe[i] << endl;
     }
+    cout << "<I> Liste aller Personen. <I>" << endl;
   } else if ((answer == "b") || (answer == "buch" )) {
     for(int i = 0; i < bListe.getSize(); i++) {
       cout << i+1 << ": " << bListe[i] << endl;
     }
+    cout << "<I> Liste aller Bücher. <I>" << endl;
   } else if ((answer == "c") || (answer == "cd" )) {
     for(int i = 0; i < cListe.getSize(); i++) {
       cout << i+1 << ": " << cListe[i] << endl;
     }
+    cout << "<I> Liste aller CDs. <I>" << endl;
   } else if ((answer == "d") || (answer == "dvd" )) {
     for(int i = 0; i < dListe.getSize(); i++) {
       cout << i+1 << ": " << dListe[i] << endl;
     }
+    cout << "<I> Liste aller DVDs. <I>" << endl;
+  } else {
+    cout << "<!> '" << answer << "' ist kein gültiger Parameter. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
+  }
+}
+
+void newEntry() {
+  string answer;
+
+  cout << "<?> In welcher Liste möchten sie ein Eintrag hinzufügen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl;
+  getline(cin, answer);
+
+  if ((answer == "p") || (answer == "person")) {
+    string pid, vorname, nachname;
+    cout << "<?> Vorname: <?>" << endl;
+    getline(cin, pid);
+    cout << "<?> Nachname: <?>" << endl;
+    getline(cin, pid);
+    cout << "<?> Nachname: <?>" << endl;
+    getline(cin, pid);
+  } else if (answer == "b" || answer == "buch" || answer == "c" || answer == "cd" || answer == "d" || answer == "dvd") {
+    /* code */
   } else {
     cout << "<!> '" << answer << "' ist kein gültiger Parameter. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
   }
@@ -473,7 +496,7 @@ bool quit() {
 
 int main() {
   // Compiler-Command
-  //g++ main.cpp Klassen/person.cpp Klassen/date.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp
+  //prog2_beleg] $ g++ main.cpp Klassen/person.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp
 
   bool running = true;
   string argument;
@@ -511,7 +534,7 @@ int main() {
       }
     } else if(argument == "n") {
       if (fileLoaded) {
-
+        newEntry();
       } else {
         cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
       }

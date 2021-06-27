@@ -6,8 +6,6 @@
 *                                   *
 ************************************/
 
-#include "../person.h"
-#include "../date.h"
 #include "medium.h"
 
 #ifndef _DVD_H_

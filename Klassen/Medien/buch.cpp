@@ -9,16 +9,12 @@
 #include <iostream>
 #include <iomanip>
 using namespace std;
-#include "../person.h"
-#include "../date.h"
 #include "medium.h"
 #include "buch.h"
 
 // KONSTRUKTOREN
 
 Buch::Buch() {
-  Date ausleihDatum;
-  Date rueckgabeDatum;
   setID("");
   setTitel("");
   setKennzeichen("b");

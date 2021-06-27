@@ -6,8 +6,6 @@
 *                                   *
 ************************************/
 
-#include "../date.h"
-
 #ifndef _MEDIUM_H_
 #define _MEDIUM_H_
 class Medium {
