@@ -20,10 +20,10 @@ CD::CD() {
   setKennzeichen("cd");
   setAusleihStatus(false);
   setAusleiher("");
-  this->dauer=0;
+  this->dauer="";
 }
 
-CD::CD(string id, string titel, bool ausleihStatus, string ausleiher, int dauer) {
+CD::CD(string id, string titel, bool ausleihStatus, string ausleiher, string dauer) {
   setID(id);
   setTitel(titel);
   setKennzeichen("cd");
@@ -34,11 +34,11 @@ CD::CD(string id, string titel, bool ausleihStatus, string ausleiher, int dauer)
 
 // SETTER & GETTER
 
-void CD::setDauer(int dauer) {
+void CD::setDauer(string dauer) {
   this->dauer=dauer;
 }
 
-int CD::getDauer() {
+string CD::getDauer() {
   return dauer;
 }
 

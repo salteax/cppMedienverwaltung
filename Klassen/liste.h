@@ -61,7 +61,7 @@ void Liste<T>::addElement(T value) {
 
 template <class T>
 void Liste<T>::removeElement(int i) {
-  buffer.erase(i);
+  buffer.erase(buffer.begin()+i);
   size = size - 1;
 }
 

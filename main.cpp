@@ -21,16 +21,7 @@ using namespace std;
 #include "./Klassen/Medien/dvd.h"
 
 /*
-TODO:
-Alles Leerzeichen bei Strings durch '_' umtauschen + reverse
-Funktionen verleih, rueckgabe
-
-
-Verwaltung der Personen (erfassen, anzeigen, auflisten, löschen ...)
-Verwaltung der Medien(s.o.)
-
-überschriebene couts für Klassen schreiben
-
+  TODO: Auf Fehler testen, zB mit leerer Datei etc.
 */
 
 // Globale Variablen
@@ -47,25 +38,25 @@ void addPerson(string pid, string vorname, string nachname) {
   pListe.addElement(tempPerson);
 }
 
-void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl) {
+void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, string autor, string verlag, string seitenanzahl) {
   Buch tempBuch(id, titel, ausleihStatus, ausleiher, autor, verlag, seitenanzahl);
   bListe.addElement(tempBuch);
 }
 
-void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, int dauer) {
+void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, string dauer) {
   CD tempCD(id, titel, ausleihStatus, ausleiher, dauer);
   cListe.addElement(tempCD);
 }
 
-void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre) {
-  DVD tempDVD(id, titel, ausleihStatus, ausleiher, fsk, dauer, genre);
+void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, string dauer, string genre) {
+  DVD tempDVD(id, titel, ausleihStatus, ausleiher, dauer, genre);
   dListe.addElement(tempDVD);
 }
 
 bool fileToListe() {
   // Objektbezogene Variablen
   string pid, vorname, nachname;
-  string id, titel, ausleiher, autor, verlag, seitenanzahl, dauer, fsk, genre;
+  string id, titel, ausleiher, autor, verlag, seitenanzahl, dauer, genre;
   bool ausleihStatus;
   // Dateiarbeit Variablen
   ifstream file;
@@ -108,7 +99,7 @@ bool fileToListe() {
       {
         my_stream.str(line);
         my_stream >> id >> titel >> ausleihStatus >> ausleiher >> autor >> verlag >> seitenanzahl >> c;
-        addMedium(id, titel, ausleihStatus, ausleiher, autor, verlag, stoi(seitenanzahl));
+        addMedium(id, titel, ausleihStatus, ausleiher, autor, verlag, seitenanzahl);
         my_stream.clear();
       }
       break;
@@ -116,15 +107,15 @@ bool fileToListe() {
       {
         my_stream.str(line);
         my_stream >> id >> titel >> ausleihStatus >> ausleiher >> dauer >> c;
-        addMedium(id, titel, ausleihStatus, ausleiher, stoi(dauer));
+        addMedium(id, titel, ausleihStatus, ausleiher, dauer);
         my_stream.clear();
       }
       break;
       case 'D':
       {
         my_stream.str(line);
-        my_stream >> id >> titel >> ausleihStatus >> ausleiher >> fsk >> dauer >> genre >> c;
-        addMedium(id, titel, ausleihStatus, ausleiher, stoi(fsk), stoi(dauer), genre);
+        my_stream >> id >> titel >> ausleihStatus >> ausleiher >> dauer >> genre >> c;
+        addMedium(id, titel, ausleihStatus, ausleiher, dauer, genre);
         my_stream.clear();
       }
       break;
@@ -169,7 +160,7 @@ bool listeToFile() {
   }
 
   for (int i = 0; i < dListe.getSize(); i++) {
-    file << dListe[i].getID() << " " << dListe[i].getTitel() << " " << dListe[i].getAusleihStatus() << " " << dListe[i].getAusleiher() << " " << dListe[i].getFSK() << " " << dListe[i].getDauer() << " " << dListe[i].getGenre() << endl;
+    file << dListe[i].getID() << " " << dListe[i].getTitel() << " " << dListe[i].getAusleihStatus() << " " << dListe[i].getAusleiher() << " " << dListe[i].getDauer() << " " << dListe[i].getGenre() << endl;
   }
 
   file.close();
@@ -277,13 +268,65 @@ string replaceAll(string s, char a, char b) {
   return s;
 }
 
-bool pid_exists(string pid) {
-  for(int i = 0; i < pListe.getSize(); i++) {
-    if (pListe[i].getPID() == pid) {
-      return true;
+int id_exists(string id) {
+  if (id.at(0) == 'P') {
+    for(int i = 0; i < pListe.getSize(); i++) {
+      if(pListe[i].getPID() == id) {
+        return i;
+      }
     }
+    return -1;
+  } else if(id.at(0) == 'B') {
+    for(int i = 0; i < bListe.getSize(); i++) {
+      if(bListe[i].getID() == id) {
+        return i;
+      }
+    }
+    return -1;
+  } else if(id.at(0) == 'C') {
+    for(int i = 0; i < cListe.getSize(); i++) {
+      if(cListe[i].getID() == id) {
+        return i;
+      }
+    }
+    return -1;
+  } else if(id.at(0) == 'D') {
+    for(int i = 0; i < dListe.getSize(); i++) {
+      if(dListe[i].getID() == id) {
+        return i;
+      }
+    }
+    return -1;
+  } else {
+    return -1;
   }
-  return false;
+}
+
+string new_id(char c) {
+  string new_id, identifier;
+  if (c == 'p') {
+    identifier = "P";
+    new_id = to_string(stoi(((pListe[pListe.getSize()-1].getPID()).substr(1,3)))+1);
+  } else if (c == 'b') {
+    identifier = "B";
+    new_id = to_string(stoi(((bListe[bListe.getSize()-1].getID()).substr(1,3)))+1);
+  } else if (c == 'c') {
+    identifier = "C";
+    new_id = to_string(stoi(((cListe[cListe.getSize()-1].getID()).substr(1,3)))+1);
+  } else if (c == 'd') {
+    identifier = "D";
+    new_id = to_string(stoi(((dListe[dListe.getSize()-1].getID()).substr(1,3)))+1);
+  }
+  if (stoi(new_id) < 10) {
+    new_id = identifier + "00" + new_id;
+    return new_id;
+  } if ((stoi(new_id) >= 10) && (stoi(new_id) < 100)) {
+    new_id = identifier + "0" + new_id;
+    return new_id;
+  } else {
+    new_id = identifier + new_id;
+    return new_id;
+  }
 }
 
 bool loadFile() {
@@ -364,17 +407,122 @@ void newEntry() {
 
   cout << "<?> In welcher Liste möchten sie ein Eintrag hinzufügen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl;
   getline(cin, answer);
-
-  if ((answer == "p") || (answer == "person")) {
-    string pid, vorname, nachname;
+  if((answer == "p") || (answer == "person")) {
+    string vorname, nachname;
     cout << "<?> Vorname: <?>" << endl;
-    getline(cin, pid);
+    getline(cin, vorname);
     cout << "<?> Nachname: <?>" << endl;
+    getline(cin, nachname);
+    addPerson(new_id('p'), replaceAll(vorname, ' ', '_'), replaceAll(nachname, ' ', '_'));
+    cout << "<I> Person wurde der Liste hinzugefügt. <I>" << endl;
+  } else if(answer == "b" || answer == "buch" || answer == "c" || answer == "cd" || answer == "d" || answer == "dvd") {
+    string titel;
+    cout << "<?> Titel: <?>" << endl;
+    getline(cin, titel);
+    if(answer == "b" || answer == "buch") {
+      string autor, verlag, seitenanzahl;
+      cout << "<?> Autor: <?>" << endl;
+      getline(cin, autor);
+      cout << "<?> Verlag: <?>" << endl;
+      getline(cin, verlag);
+      cout << "<?> Seitenanzahl: <?>" << endl;
+      getline(cin, seitenanzahl);
+      addMedium(new_id('b'), replaceAll(titel, ' ', '_'), 0, "0", replaceAll(autor, ' ', '_'), replaceAll(verlag, ' ', '_'), replaceAll(seitenanzahl, ' ', '_'));
+      cout << "<I> Buch wurde der Liste hinzugefügt. <I>" << endl;
+    } else if(answer == "c" || answer == "cd") {
+      string dauer;
+      cout << "<?> Dauer: <?>" << endl;
+      getline(cin, dauer);
+      addMedium(new_id('c'), replaceAll(titel, ' ', '_'), 0, "0", replaceAll(dauer, ' ', '_'));
+      cout << "<I> CD wurde der Liste hinzugefügt. <I>" << endl;
+    } else if(answer == "d" || answer == "dvd") {
+      string fsk, dauer, genre;
+      cout << "<?> FSK: <?>" << endl;
+      getline(cin, fsk);
+      cout << "<?> Dauer: <?>" << endl;
+      getline(cin, dauer);
+      cout << "<?> Genre: <?>" << endl;
+      getline(cin, genre);
+      addMedium(new_id('d'), replaceAll(titel, ' ', '_'), 0, "0", replaceAll(fsk, ' ', '_'), replaceAll(dauer, ' ', '_'), replaceAll(genre, ' ', '_'));
+      cout << "<I> DVD wurde der Liste hinzugefügt. <I>" << endl;
+    }
+  } else {
+    cout << "<!> '" << answer << "' ist kein gültiger Parameter. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
+  }
+}
+
+void del() {
+  string answer;
+  int occupiedItems = 0, index = 0;
+
+  cout << "<?> Aus welcher Liste möchten sie einen Eintrag löschen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl;
+  getline(cin, answer);
+  if((answer == "p") || (answer == "person")) {
+    string pid;
+    cout << "<?> PID zum zu löschenden Eintrag: <?>" << endl;
     getline(cin, pid);
-    cout << "<?> Nachname: <?>" << endl;
-    getline(cin, pid);
-  } else if (answer == "b" || answer == "buch" || answer == "c" || answer == "cd" || answer == "d" || answer == "dvd") {
-    /* code */
+    index = id_exists(pid);
+    if (index != -1) {
+      for(int i = 0; i < bListe.getSize(); i++) {
+        if ((bListe[i].getAusleiher() == pid)) {
+          occupiedItems = occupiedItems+1;
+        }
+      }
+      for(int i = 0; i < cListe.getSize(); i++) {
+        if ((cListe[i].getAusleiher() == pid)) {
+          occupiedItems = occupiedItems+1;
+        }
+      }
+      for(int i = 0; i < dListe.getSize(); i++) {
+        if ((dListe[i].getAusleiher() == pid)) {
+          occupiedItems = occupiedItems+1;
+        }
+      }
+      if (occupiedItems == 0) {
+        pListe.removeElement(index);
+        cout << "<I> Person wurde aus Liste entfernt. <I>" << endl;
+      } else {
+        cout << "<!> Person konnte nicht aus Liste entfernt werden, da sie " << occupiedItems << " Medien ausgeliehen hat. <!>" << endl;
+      }
+    } else {
+      cout << "<!> Person mit PID '" << pid << "' existiert nicht. <!>" << endl;
+    }
+  } else if(answer == "b" || answer == "buch" || answer == "c" || answer == "cd" || answer == "d" || answer == "dvd") {
+    string id;
+    cout << "<?> ID zum zu löschenden Eintrag: <?>" << endl;
+    getline(cin, id);
+    index = id_exists(id);
+    cout << "help0" << endl;
+    if (index != -1) {
+      cout << "help1" << endl;
+      if(answer == "b" || answer == "buch") {
+        if (bListe[index].getAusleiher() == "0") {
+          bListe.removeElement(index);
+          cout << "<I> Buch wurde aus Liste entfernt. <I>" << endl;
+        } else {
+          cout << "<!> Das Buch ist aktuell von '" << bListe[index].getAusleiher() << "' ausgeliehen und konnte somit nicht entfernt werden. <!>" << endl;
+        }
+      } else if(answer == "c" || answer == "cd") {
+        cout << "help2" << endl;
+        if (cListe[index].getAusleiher() == "0") {
+          cout << "help3" << endl;
+          cListe.removeElement(index);
+          cout << "help4" << endl;
+          cout << "<I> CD wurde aus Liste entfernt. <I>" << endl;
+        } else {
+          cout << "<!> Die CD ist aktuell von '" << cListe[index].getAusleiher() << "' ausgeliehen und konnte somit nicht entfernt werden. <!>" << endl;
+        }
+      } else if(answer == "d" || answer == "dvd") {
+        if (dListe[index].getAusleiher() == "0") {
+          dListe.removeElement(index);
+          cout << "<I> DVD wurde aus Liste entfernt. <I>" << endl;
+        } else {
+          cout << "<!> Die DVD ist aktuell von '" << dListe[index].getAusleiher() << "' ausgeliehen und konnte somit nicht entfernt werden. <!>" << endl;
+        }
+      }
+    } else {
+      cout << "<!> Medium mit ID '" << id << "' existiert nicht. <!>" << endl;
+    }
   } else {
     cout << "<!> '" << answer << "' ist kein gültiger Parameter. Versuchen sie den Vorgang zu wiederholen. <!>" << endl;
   }
@@ -400,21 +548,21 @@ void search() {
     }
   } else if ((answer == "b") || (answer == "buch" )) {
     for(int i = 0; i < bListe.getSize(); i++) {
-      if ((bListe[i].getID() == searchArgument) ||  (bListe[i].getTitel() == searchArgument) || (bListe[i].getAusleiher() == searchArgument) || (bListe[i].getAutor() == searchArgument) || (bListe[i].getVerlag() == searchArgument) || (to_string(bListe[i].getSeitenanzahl()) == searchArgument)) {
+      if ((bListe[i].getID() == searchArgument) ||  (bListe[i].getTitel() == searchArgument) || (bListe[i].getAusleiher() == searchArgument) || (bListe[i].getAutor() == searchArgument) || (bListe[i].getVerlag() == searchArgument) || (bListe[i].getSeitenanzahl() == searchArgument)) {
         cout << foundArguments+1 << ": " << bListe[i] << endl;
         foundArguments++;
       }
     }
   } else if ((answer == "c") || (answer == "cd" )) {
     for(int i = 0; i < cListe.getSize(); i++) {
-      if ((cListe[i].getID() == searchArgument) ||  (cListe[i].getTitel() == searchArgument) || (cListe[i].getAusleiher() == searchArgument) || (to_string(cListe[i].getDauer()) == searchArgument)) {
+      if ((cListe[i].getID() == searchArgument) ||  (cListe[i].getTitel() == searchArgument) || (cListe[i].getAusleiher() == searchArgument) || (cListe[i].getDauer() == searchArgument)) {
         cout << foundArguments+1 << ": " << cListe[i] << endl;
         foundArguments++;
       }
     }
   } else if ((answer == "d") || (answer == "dvd" )) {
     for(int i = 0; i < dListe.getSize(); i++) {
-      if ((dListe[i].getID() == searchArgument) ||  (dListe[i].getTitel() == searchArgument) || (dListe[i].getAusleiher() == searchArgument) || (to_string(dListe[i].getFSK()) == searchArgument) || (to_string(dListe[i].getDauer()) == searchArgument) || (dListe[i].getGenre() == searchArgument)) {
+      if ((dListe[i].getID() == searchArgument) ||  (dListe[i].getTitel() == searchArgument) || (dListe[i].getAusleiher() == searchArgument) || (dListe[i].getDauer() == searchArgument) || (dListe[i].getGenre() == searchArgument)) {
         cout << foundArguments+1 << ": " << dListe[i] << endl;
         foundArguments++;
       }
@@ -433,7 +581,7 @@ void ausleih() {
 
   cout << "<?> PID der Person welche das Medium ausleihen möchte: <?>" << endl;
   getline(cin, pid);
-  if (pid_exists(pid)) {
+  if (id_exists(pid) != -1) {
     cout << "<?> ID des Mediums welches ausgeliehen werden möchte: <?>" << endl;
     getline(cin, mid);
     if (verleih('a', mid, pid)) {
@@ -451,7 +599,7 @@ void rueckgabe() {
 
   cout << "<?> PID der Person welche das Medium zurückgeben möchte: <?>" << endl;
   getline(cin, pid);
-  if (pid_exists(pid)) {
+  if (id_exists(pid) != -1) {
     cout << "<?> ID des Mediums welches zurückgegeben werden möchte: <?>" << endl;
     getline(cin, mid);
     if (verleih('r', mid, pid)) {
@@ -540,7 +688,7 @@ int main() {
       }
     } else if(argument == "d") {
       if (fileLoaded) {
-
+        del();
       } else {
         cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
       }

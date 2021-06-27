@@ -22,10 +22,10 @@ Buch::Buch() {
   setAusleiher("");
   this->autor="";
   this->verlag="";
-  this->seitenanzahl=0;
+  this->seitenanzahl="";
 }
 
-Buch::Buch(string id, string titel, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl) {
+Buch::Buch(string id, string titel, bool ausleihStatus, string ausleiher, string autor, string verlag, string seitenanzahl) {
   setID(id);
   setTitel(titel);
   setKennzeichen("b");
@@ -54,11 +54,11 @@ string Buch::getVerlag() {
   return verlag;
 }
 
-void Buch::setSeitenanzahl(int seitenanzahl) {
+void Buch::setSeitenanzahl(string seitenanzahl) {
   this->seitenanzahl=seitenanzahl;
 }
 
-int Buch::getSeitenanzahl() {
+string Buch::getSeitenanzahl() {
   return seitenanzahl;
 }
 

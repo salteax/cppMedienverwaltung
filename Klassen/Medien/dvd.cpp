@@ -20,37 +20,27 @@ DVD::DVD() {
   setKennzeichen("dvd");
   setAusleihStatus(false);
   setAusleiher("");
-  this->fsk=0;
-  this->dauer=0;
+  this->dauer="";
   this->genre="";
 }
 
-DVD::DVD(string id, string titel, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre) {
+DVD::DVD(string id, string titel, bool ausleihStatus, string ausleiher, string dauer, string genre) {
   setID(id);
   setTitel(titel);
   setKennzeichen("dvd");
   setAusleihStatus(ausleihStatus);
   setAusleiher(ausleiher);
-  this->fsk=fsk;
   this->dauer=dauer;
   this->genre=genre;
 }
 
 // SETTER & GETTER
 
-void DVD::setFSK(int fsk) {
-  this->fsk=fsk;
-}
-
-int DVD::getFSK() {
-  return fsk;
-}
-
-void DVD::setDauer(int dauer) {
+void DVD::setDauer(string dauer) {
   this->dauer=dauer;
 }
 
-int DVD::getDauer() {
+string DVD::getDauer() {
   return dauer;
 }
 
@@ -66,9 +56,9 @@ string DVD::getGenre() {
 
 ostream& operator<<(ostream& os, DVD& d) {
   if (d.getAusleihStatus()) {
-    os << d.getID() << ", " << d.getTitel() << ", " << d.getGenre() << ", " << d.getFSK() << ", " << d.getDauer() << ", " << "ausgeliehen von " << d.getAusleiher();
+    os << d.getID() << ", " << d.getTitel() << ", " << d.getGenre() << ", " << d.getDauer() << ", " << "ausgeliehen von " << d.getAusleiher();
   } else {
-    os << d.getID() << ", " << d.getTitel() << ", " << d.getGenre() << ", " << d.getFSK() << ", " << d.getDauer() << ", " << "nicht ausgeliehen";
+    os << d.getID() << ", " << d.getTitel() << ", " << d.getGenre() << ", " << d.getDauer() << ", " << "nicht ausgeliehen";
   }
   return os;
 }

@@ -14,13 +14,13 @@ class CD : public Medium {
 public:
   // KONSTRUKTOREN
   CD();
-  CD(string id, string titel, bool ausleihStatus, string ausleiher, int dauer);
+  CD(string id, string titel, bool ausleihStatus, string ausleiher, string dauer);
   // SETTER & GETTER
-  void setDauer(int dauer);
-  int getDauer();
+  void setDauer(string dauer);
+  string getDauer();
   // OPERATOR
   friend ostream& operator<<(ostream& os, CD& c);
 private:
-  int dauer;
+  string dauer;
 };
 #endif

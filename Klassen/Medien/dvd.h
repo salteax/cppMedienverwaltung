@@ -14,18 +14,15 @@ class DVD : public Medium {
 public:
   // KONSTRUKTOREN
   DVD();
-  DVD(string id, string titel, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre);
+  DVD(string id, string titel, bool ausleihStatus, string ausleiher, string dauer, string genre);
   // SETTER & GETTER
-  void setFSK(int fsk);
-  int getFSK();
-  void setDauer(int dauer);
-  int getDauer();
+  void setDauer(string dauer);
+  string getDauer();
   void setGenre(string genre);
   string getGenre();
   // OPERATOR
   friend ostream& operator<<(ostream& os, DVD& d);
 private:
-  int fsk, dauer;
-  string genre;
+  string fsk, dauer, genre;
 };
 #endif
