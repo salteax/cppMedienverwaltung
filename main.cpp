@@ -368,21 +368,21 @@ void search() {
     }
   } else if ((answer == "b") || (answer == "buch" )) {
     for(int i = 0; i < bListe.getSize(); i++) {
-      if ((bListe[i].getID() == searchArgument) ||  (bListe[i].getTitel() == searchArgument) || (bListe[i].getAusleiher() == searchArgument) || (bListe[i].getAutor() == searchArgument) || (bListe[i].getVerlag() == searchArgument) || (to_string(bListe[i].getSeitenanzahl()) == searchArgument)) {
+      if ((bListe[i].getID() == searchArgument) ||  (bListe[i].getTitel() == searchArgument) || (bListe[i].getAusleiher() == searchArgument) || (bListe[i].getAutor() == searchArgument) || (bListe[i].getVerlag() == searchArgument) || (to_string(bListe[i].getSeitenanzahl()) == searchArgument) || (bListe[i].getAusleihDatum().dateToString() == searchArgument) || (bListe[i].getRueckgabeDatum().dateToString() == searchArgument)) {
         cout << foundArguments+1 << ": " << bListe[i] << endl;
         foundArguments++;
       }
     }
   } else if ((answer == "c") || (answer == "cd" )) {
     for(int i = 0; i < cListe.getSize(); i++) {
-      if ((cListe[i].getID() == searchArgument) ||  (cListe[i].getTitel() == searchArgument) || (cListe[i].getAusleiher() == searchArgument) || (to_string(cListe[i].getDauer()) == searchArgument)) {
+      if ((cListe[i].getID() == searchArgument) ||  (cListe[i].getTitel() == searchArgument) || (cListe[i].getAusleiher() == searchArgument) || (to_string(cListe[i].getDauer()) == searchArgument) || (cListe[i].getAusleihDatum().dateToString() == searchArgument) || (cListe[i].getRueckgabeDatum().dateToString() == searchArgument)) {
         cout << foundArguments+1 << ": " << cListe[i] << endl;
         foundArguments++;
       }
     }
   } else if ((answer == "d") || (answer == "dvd" )) {
     for(int i = 0; i < dListe.getSize(); i++) {
-      if ((dListe[i].getID() == searchArgument) ||  (dListe[i].getTitel() == searchArgument) || (dListe[i].getAusleiher() == searchArgument) || (to_string(dListe[i].getFSK()) == searchArgument) || (to_string(dListe[i].getDauer()) == searchArgument) || (dListe[i].getGenre() == searchArgument)) {
+      if ((dListe[i].getID() == searchArgument) ||  (dListe[i].getTitel() == searchArgument) || (dListe[i].getAusleiher() == searchArgument) || (to_string(dListe[i].getFSK()) == searchArgument) || (to_string(dListe[i].getDauer()) == searchArgument) || (dListe[i].getGenre() == searchArgument) || (dListe[i].getAusleihDatum().dateToString() == searchArgument) || (dListe[i].getRueckgabeDatum().dateToString() == searchArgument)) {
         cout << foundArguments+1 << ": " << dListe[i] << endl;
         foundArguments++;
       }

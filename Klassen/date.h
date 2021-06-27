@@ -20,6 +20,9 @@ public:
   int getMonat();
   void setTag(int tag);
   int getTag();
+  // FUNKTIONEN
+  string dateToString();
+  // OPERATOR
   friend ostream &operator<<(ostream &os, const Date &d);
 private:
   int jahr, monat, tag;

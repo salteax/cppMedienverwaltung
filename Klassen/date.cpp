@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cstring>
 using namespace std;
 #include "date.h"
 
@@ -43,6 +44,11 @@ void Date::setTag(int tag) {
 
 int Date::getTag() {
   return tag;
+}
+
+string Date::dateToString() {
+  string date = to_string(getTag()) + "." + to_string(getMonat()) + "." + to_string(getJahr());
+  return date;
 }
 
 ostream& operator<<(ostream& os, const Date& d) {
