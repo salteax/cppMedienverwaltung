@@ -1,5 +1,5 @@
-B001 DasBuch 2021 6 9 0 0 0 1 P001 DerAutor DerVerlag 100
-B002 DasNeueBuch 2000 1 1 2020 1 1 0 DerAndereAusleieher Jonas_Platin DerAndereVerlag 999
-C001 DieCD 2021 6 9 0 0 0 1 P001 60
-C002 DieCD 2021 6 9 0 0 0 1 P001 60
-D001 DieDVD 2021 6 9 0 0 0 1 P001 18 60 Horror
+B001 DasBuch 0 0 DerAutor DerVerlag 100
+B002 DasNeueBuch 0 DerAndereAusleieher Jonas_Platin DerAndereVerlag 999
+C001 DieCD 1 P001 60
+C002 DieCD 1 P001 60
+D001 DieDVD 1 P001 18 60 Horror

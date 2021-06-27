@@ -19,17 +19,12 @@ public:
   string getTitel();
   void setKennzeichen(string kennzeichen);
   string getKennzeichen();
-  void setAusleihDatum(int jahr, int monat, int tag);
-  Date getAusleihDatum();
-  void setRueckgabeDatum(int jahr, int monat, int tag);
-  Date getRueckgabeDatum();
   void setAusleihStatus(bool ausleihStatus);
   bool getAusleihStatus();
   void setAusleiher(string pid);
   string getAusleiher();
 private:
   string id, pid, titel, kennzeichen;
-  Date ausleihDatum, rueckgabeDatum;
   bool ausleihStatus;
 };
 #endif

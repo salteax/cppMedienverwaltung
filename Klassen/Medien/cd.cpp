@@ -22,19 +22,15 @@ CD::CD() {
   setID("");
   setTitel("");
   setKennzeichen("cd");
-  setAusleihDatum(0,0,0);
-  setRueckgabeDatum(0,0,0);
   setAusleihStatus(false);
   setAusleiher("");
   this->dauer=0;
 }
 
-CD::CD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int dauer) {
+CD::CD(string id, string titel, bool ausleihStatus, string ausleiher, int dauer) {
   setID(id);
   setTitel(titel);
   setKennzeichen("cd");
-  setAusleihDatum(jahrA, monatA, tagA);
-  setRueckgabeDatum(jahrR, monatR, tagR);
   setAusleihStatus(ausleihStatus);
   setAusleiher(ausleiher);
   this->dauer=dauer;
@@ -54,7 +50,7 @@ int CD::getDauer() {
 
 ostream& operator<<(ostream& os, CD& c) {
   if (c.getAusleihStatus()) {
-    os << c.getID() << ", " << c.getTitel() << ", " << c.getDauer() << ", " << "ausgeliehen" << ", " << c.getAusleiher() << ", " << c.getAusleihDatum() << ", " << c.getRueckgabeDatum();
+    os << c.getID() << ", " << c.getTitel() << ", " << c.getDauer() << ", " << "ausgeliehen von " << c.getAusleiher();
   } else {
     os << c.getID() << ", " << c.getTitel() << ", " << c.getDauer() << ", " << "nicht ausgeliehen";
   }

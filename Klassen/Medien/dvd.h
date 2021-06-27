@@ -16,7 +16,7 @@ class DVD : public Medium {
 public:
   // KONSTRUKTOREN
   DVD();
-  DVD(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre);
+  DVD(string id, string titel, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre);
   // SETTER & GETTER
   void setFSK(int fsk);
   int getFSK();

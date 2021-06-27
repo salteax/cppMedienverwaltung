@@ -39,26 +39,6 @@ string Medium::getKennzeichen() {
   return kennzeichen;
 }
 
-void Medium::setAusleihDatum(int jahr, int monat, int tag) {
-  ausleihDatum.setJahr(jahr);
-  ausleihDatum.setMonat(monat);
-  ausleihDatum.setTag(tag);
-}
-
-Date Medium::getAusleihDatum() {
-  return ausleihDatum;
-}
-
-void Medium::setRueckgabeDatum(int jahr, int monat, int tag) {
-  rueckgabeDatum.setJahr(jahr);
-  rueckgabeDatum.setMonat(monat);
-  rueckgabeDatum.setTag(tag);
-}
-
-Date Medium::getRueckgabeDatum() {
-  return rueckgabeDatum;
-}
-
 void Medium::setAusleihStatus(bool ausleihStatus) {
   this->ausleihStatus=ausleihStatus;
 }

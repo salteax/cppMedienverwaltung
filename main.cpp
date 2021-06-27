@@ -48,24 +48,24 @@ void addPerson(string pid, string vorname, string nachname, string geschlecht, i
   pListe.addElement(tempPerson);
 }
 
-void addMedium(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl) {
-  Buch tempBuch(id, titel, jahrA, monatA, tagA, jahrR, monatR, tagR, ausleihStatus, ausleiher, autor, verlag, seitenanzahl);
+void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl) {
+  Buch tempBuch(id, titel, ausleihStatus, ausleiher, autor, verlag, seitenanzahl);
   bListe.addElement(tempBuch);
 }
 
-void addMedium(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int dauer) {
-  CD tempCD(id, titel, jahrA, monatA, tagA, jahrR, monatR, tagR, ausleihStatus, ausleiher, dauer);
+void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, int dauer) {
+  CD tempCD(id, titel, ausleihStatus, ausleiher, dauer);
   cListe.addElement(tempCD);
 }
 
-void addMedium(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre) {
-  DVD tempDVD(id, titel, jahrA, monatA, tagA, jahrR, monatR, tagR, ausleihStatus, ausleiher, fsk, dauer, genre);
+void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, int fsk, int dauer, string genre) {
+  DVD tempDVD(id, titel, ausleihStatus, ausleiher, fsk, dauer, genre);
   dListe.addElement(tempDVD);
 }
 
 bool fileToListe() {
   // Objektbezogene Variablen
-  string jahr1, monat1, tag1, jahr2, monat2, tag2;
+  string jahr, monat, tag;
   string pid, vorname, nachname, geschlecht;
   string id, titel, ausleiher, autor, verlag, seitenanzahl, dauer, fsk, genre;
   bool ausleihStatus;
@@ -85,8 +85,8 @@ bool fileToListe() {
 
   while (getline(file,line)) {
     my_stream.str(line);
-    my_stream >> pid >> vorname >> nachname >> geschlecht >> jahr1 >> monat1 >> tag1 >> c;
-    addPerson(pid, vorname, nachname, geschlecht, stoi(jahr1), stoi(monat1), stoi(tag1));
+    my_stream >> pid >> vorname >> nachname >> geschlecht >> jahr >> monat >> tag >> c;
+    addPerson(pid, vorname, nachname, geschlecht, stoi(jahr), stoi(monat), stoi(tag));
     my_stream.clear();
   }
 
@@ -109,24 +109,24 @@ bool fileToListe() {
       case 'B':
       {
         my_stream.str(line);
-        my_stream >> id >> titel >> jahr1 >> monat1 >> tag1 >> jahr2 >> monat2 >> tag2 >> ausleihStatus >> ausleiher >> autor >> verlag >> seitenanzahl >> c;
-        addMedium(id, titel, stoi(jahr1), stoi(monat1), stoi(tag1), stoi(jahr2), stoi(monat2), stoi(tag2), ausleihStatus, ausleiher, autor, verlag, stoi(seitenanzahl));
+        my_stream >> id >> titel >> ausleihStatus >> ausleiher >> autor >> verlag >> seitenanzahl >> c;
+        addMedium(id, titel, ausleihStatus, ausleiher, autor, verlag, stoi(seitenanzahl));
         my_stream.clear();
       }
       break;
       case 'C':
       {
         my_stream.str(line);
-        my_stream >> id >> titel >> jahr1 >> monat1 >> tag1 >> jahr2 >> monat2 >> tag2 >> ausleihStatus >> ausleiher >> dauer >> c;
-        addMedium(id, titel, stoi(jahr1), stoi(monat1), stoi(tag1), stoi(jahr2), stoi(monat2), stoi(tag2), ausleihStatus, ausleiher, stoi(dauer));
+        my_stream >> id >> titel >> ausleihStatus >> ausleiher >> dauer >> c;
+        addMedium(id, titel, ausleihStatus, ausleiher, stoi(dauer));
         my_stream.clear();
       }
       break;
       case 'D':
       {
         my_stream.str(line);
-        my_stream >> id >> titel >> jahr1 >> monat1 >> tag1 >> jahr2 >> monat2 >> tag2 >> ausleihStatus >> ausleiher >> fsk >> dauer >> genre >> c;
-        addMedium(id, titel, stoi(jahr1), stoi(monat1), stoi(tag1), stoi(jahr2), stoi(monat2), stoi(tag2), ausleihStatus, ausleiher, stoi(fsk), stoi(dauer), genre);
+        my_stream >> id >> titel >> ausleihStatus >> ausleiher >> fsk >> dauer >> genre >> c;
+        addMedium(id, titel, ausleihStatus, ausleiher, stoi(fsk), stoi(dauer), genre);
         my_stream.clear();
       }
       break;
@@ -163,23 +163,23 @@ bool listeToFile() {
   file.seekp(0);
 
   for (int i = 0; i < bListe.getSize(); i++) {
-    file << bListe[i].getID() << " " << bListe[i].getTitel() << " " << bListe[i].getAusleihDatum().getJahr() << " " << bListe[i].getAusleihDatum().getMonat() << " " << bListe[i].getAusleihDatum().getTag() << " " << bListe[i].getRueckgabeDatum().getJahr() << " " << bListe[i].getRueckgabeDatum().getMonat() << " " << bListe[i].getRueckgabeDatum().getTag() << " " << bListe[i].getAusleihStatus() << " " << bListe[i].getAusleiher() << " " << bListe[i].getAutor() << " " << bListe[i].getVerlag() << " " << bListe[i].getSeitenanzahl() << endl;
+    file << bListe[i].getID() << " " << bListe[i].getTitel() << " " << bListe[i].getAusleihStatus() << " " << bListe[i].getAusleiher() << " " << bListe[i].getAutor() << " " << bListe[i].getVerlag() << " " << bListe[i].getSeitenanzahl() << endl;
   }
 
   for (int i = 0; i < cListe.getSize(); i++) {
-    file << cListe[i].getID() << " " << cListe[i].getTitel() << " " << cListe[i].getAusleihDatum().getJahr() << " " << cListe[i].getAusleihDatum().getMonat() << " " << cListe[i].getAusleihDatum().getTag() << " " << cListe[i].getRueckgabeDatum().getJahr() << " " << cListe[i].getRueckgabeDatum().getMonat() << " " << cListe[i].getRueckgabeDatum().getTag() << " " << cListe[i].getAusleihStatus() << " " << cListe[i].getAusleiher() << " " << cListe[i].getDauer() << endl;
+    file << cListe[i].getID() << " " << cListe[i].getTitel() << " " << cListe[i].getAusleihStatus() << " " << cListe[i].getAusleiher() << " " << cListe[i].getDauer() << endl;
   }
 
   for (int i = 0; i < dListe.getSize(); i++) {
-    file << dListe[i].getID() << " " << dListe[i].getTitel() << " " << dListe[i].getAusleihDatum().getJahr() << " " << dListe[i].getAusleihDatum().getMonat() << " " << dListe[i].getAusleihDatum().getTag() << " " << dListe[i].getRueckgabeDatum().getJahr() << " " << dListe[i].getRueckgabeDatum().getMonat() << " " << dListe[i].getRueckgabeDatum().getTag() << " " << dListe[i].getAusleihStatus() << " " << dListe[i].getAusleiher() << " " << dListe[i].getFSK() << " " << dListe[i].getDauer() << " " << dListe[i].getGenre() << endl;
+    file << dListe[i].getID() << " " << dListe[i].getTitel() << " " << dListe[i].getAusleihStatus() << " " << dListe[i].getAusleiher() << " " << dListe[i].getFSK() << " " << dListe[i].getDauer() << " " << dListe[i].getGenre() << endl;
   }
 
   file.close();
   return true;
 }
 
-bool aus_rueckgabe(char c, string id, string pid) {
-  int val;
+bool verleih(char c, string id, string pid) {
+  int index = -1;
   bool test_val;
   if(c == 'a') {
     test_val = 1;
@@ -191,58 +191,58 @@ bool aus_rueckgabe(char c, string id, string pid) {
     case 'B':
       for (int i = 0; i < bListe.getSize(); i++) {
         if(bListe[i].getID() == id) {
-          val = i;
+          index = i;
           break;
         }
       }
-      if (bListe[val].getAusleihStatus() == test_val) {
+      if ((bListe[index].getAusleihStatus() == test_val) || (index == -1)) {
         return false;
       } else {
         if (c == 'r') {
-          bListe[val].setAusleiher("0");
+          bListe[index].setAusleiher("0");
         }
         else {
-          bListe[val].setAusleiher(pid);
+          bListe[index].setAusleiher(pid);
         }
-        bListe[val].setAusleihStatus(test_val);
+        bListe[index].setAusleihStatus(test_val);
         return true;
       }
     break;
     case 'C':
       for (int i = 0; i < cListe.getSize(); i++) {
         if(cListe[i].getID() == id) {
-          val = i;
+          index = i;
           break;
         }
       }
-      if (cListe[val].getAusleihStatus() == test_val) {
+      if ((cListe[index].getAusleihStatus()) == test_val || (index == -1)) {
         return false;
       } else {
         if (c == 'r') {
-          cListe[val].setAusleiher("0");
+          cListe[index].setAusleiher("0");
         } else {
-          cListe[val].setAusleiher(pid);
+          cListe[index].setAusleiher(pid);
         }
-        cListe[val].setAusleihStatus(test_val);
+        cListe[index].setAusleihStatus(test_val);
         return true;
       }
     break;
     case 'D':
       for (int i = 0; i < dListe.getSize(); i++) {
         if(dListe[i].getID() == id) {
-          val = i;
+          index = i;
           break;
         }
       }
-      if (dListe[val].getAusleihStatus() == test_val) {
+      if ((dListe[index].getAusleihStatus()) == test_val || (index == -1)) {
         return false;
       } else {
         if (c == 'r') {
-          dListe[val].setAusleiher("0");
+          dListe[index].setAusleiher("0");
         } else {
-          dListe[val].setAusleiher(pid);
+          dListe[index].setAusleiher(pid);
         }
-        dListe[val].setAusleihStatus(test_val);
+        dListe[index].setAusleihStatus(test_val);
         return true;
       }
     break;
@@ -277,6 +277,15 @@ string setFile() {
 string replaceAll(string s, char a, char b) {
   replace(s.begin(),s.end(), a, b);
   return s;
+}
+
+bool pid_exists(string pid) {
+  for(int i = 0; i < pListe.getSize(); i++) {
+    if (pListe[i].getPID() == pid) {
+      return true;
+    }
+  }
+  return false;
 }
 
 bool loadFile() {
@@ -368,21 +377,21 @@ void search() {
     }
   } else if ((answer == "b") || (answer == "buch" )) {
     for(int i = 0; i < bListe.getSize(); i++) {
-      if ((bListe[i].getID() == searchArgument) ||  (bListe[i].getTitel() == searchArgument) || (bListe[i].getAusleiher() == searchArgument) || (bListe[i].getAutor() == searchArgument) || (bListe[i].getVerlag() == searchArgument) || (to_string(bListe[i].getSeitenanzahl()) == searchArgument) || (bListe[i].getAusleihDatum().dateToString() == searchArgument) || (bListe[i].getRueckgabeDatum().dateToString() == searchArgument)) {
+      if ((bListe[i].getID() == searchArgument) ||  (bListe[i].getTitel() == searchArgument) || (bListe[i].getAusleiher() == searchArgument) || (bListe[i].getAutor() == searchArgument) || (bListe[i].getVerlag() == searchArgument) || (to_string(bListe[i].getSeitenanzahl()) == searchArgument)) {
         cout << foundArguments+1 << ": " << bListe[i] << endl;
         foundArguments++;
       }
     }
   } else if ((answer == "c") || (answer == "cd" )) {
     for(int i = 0; i < cListe.getSize(); i++) {
-      if ((cListe[i].getID() == searchArgument) ||  (cListe[i].getTitel() == searchArgument) || (cListe[i].getAusleiher() == searchArgument) || (to_string(cListe[i].getDauer()) == searchArgument) || (cListe[i].getAusleihDatum().dateToString() == searchArgument) || (cListe[i].getRueckgabeDatum().dateToString() == searchArgument)) {
+      if ((cListe[i].getID() == searchArgument) ||  (cListe[i].getTitel() == searchArgument) || (cListe[i].getAusleiher() == searchArgument) || (to_string(cListe[i].getDauer()) == searchArgument)) {
         cout << foundArguments+1 << ": " << cListe[i] << endl;
         foundArguments++;
       }
     }
   } else if ((answer == "d") || (answer == "dvd" )) {
     for(int i = 0; i < dListe.getSize(); i++) {
-      if ((dListe[i].getID() == searchArgument) ||  (dListe[i].getTitel() == searchArgument) || (dListe[i].getAusleiher() == searchArgument) || (to_string(dListe[i].getFSK()) == searchArgument) || (to_string(dListe[i].getDauer()) == searchArgument) || (dListe[i].getGenre() == searchArgument) || (dListe[i].getAusleihDatum().dateToString() == searchArgument) || (dListe[i].getRueckgabeDatum().dateToString() == searchArgument)) {
+      if ((dListe[i].getID() == searchArgument) ||  (dListe[i].getTitel() == searchArgument) || (dListe[i].getAusleiher() == searchArgument) || (to_string(dListe[i].getFSK()) == searchArgument) || (to_string(dListe[i].getDauer()) == searchArgument) || (dListe[i].getGenre() == searchArgument)) {
         cout << foundArguments+1 << ": " << dListe[i] << endl;
         foundArguments++;
       }
@@ -394,6 +403,42 @@ void search() {
     cout << "<!> '" << searchArgument << "' wurde nicht gefunden. <!>" << endl;
   }
 
+}
+
+void ausleih() {
+  string pid, mid;
+
+  cout << "<?> PID der Person welche das Medium ausleihen möchte: <?>" << endl;
+  getline(cin, pid);
+  if (pid_exists(pid)) {
+    cout << "<?> ID des Mediums welches ausgeliehen werden möchte: <?>" << endl;
+    getline(cin, mid);
+    if (verleih('a', mid, pid)) {
+      cout << "<I> Medium mit der ID '" << mid << "' wurde an die Person mit der PID '" << pid << "' verliehen. <I>" << endl;
+    } else {
+      cout << "<!> Medium mit der ID '" << mid << "' ist bereits ausgeliehen oder existiert nicht. <!>" << endl;
+    }
+  } else {
+    cout << "<!> Person mit der ID '" << pid << "' existiert nicht. <!>" << endl;
+  }
+}
+
+void rueckgabe() {
+  string pid, mid;
+
+  cout << "<?> PID der Person welche das Medium zurückgeben möchte: <?>" << endl;
+  getline(cin, pid);
+  if (pid_exists(pid)) {
+    cout << "<?> ID des Mediums welches zurückgegeben werden möchte: <?>" << endl;
+    getline(cin, mid);
+    if (verleih('r', mid, pid)) {
+      cout << "<I> Medium mit der ID '" << mid << "' wurde von der Person mit der PID '" << pid << "' zurückgegeben. <I>" << endl;
+    } else {
+      cout << "<!> Medium mit der ID '" << mid << "' ist nicht ausgeliehen oder existiert nicht. <!>" << endl;
+    }
+  } else {
+    cout << "<!> Person mit der ID '" << pid << "' existiert nicht. <!>" << endl;
+  }
 }
 
 void help() {
@@ -484,13 +529,13 @@ int main() {
       }
     } else if(argument == "a") {
       if (fileLoaded) {
-
+        ausleih();
       } else {
         cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
       }
     } else if(argument == "r") {
       if (fileLoaded) {
-
+        rueckgabe();
       } else {
         cout << "<!> Dateien sind nicht in die Listen geladen. Bitte nutzen sie 'of' dazu. <!>" << endl;
       }

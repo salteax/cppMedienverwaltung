@@ -22,8 +22,6 @@ Buch::Buch() {
   setID("");
   setTitel("");
   setKennzeichen("b");
-  setAusleihDatum(0,0,0);
-  setRueckgabeDatum(0,0,0);
   setAusleihStatus(false);
   setAusleiher("");
   this->autor="";
@@ -31,12 +29,10 @@ Buch::Buch() {
   this->seitenanzahl=0;
 }
 
-Buch::Buch(string id, string titel, int jahrA, int monatA, int tagA, int jahrR, int monatR, int tagR, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl) {
+Buch::Buch(string id, string titel, bool ausleihStatus, string ausleiher, string autor, string verlag, int seitenanzahl) {
   setID(id);
   setTitel(titel);
   setKennzeichen("b");
-  setAusleihDatum(jahrA, monatA, tagA);
-  setRueckgabeDatum(jahrR, monatR, tagR);
   setAusleihStatus(ausleihStatus);
   setAusleiher(ausleiher);
   this->autor=autor;
@@ -74,7 +70,7 @@ int Buch::getSeitenanzahl() {
 
 ostream& operator<<(ostream& os, Buch& b) {
   if (b.getAusleihStatus()) {
-    os << b.getID() << ", " << b.getTitel() << ", " << b.getAutor() << ", " << b.getVerlag() << ", " << b.getSeitenanzahl() << ", " << "ausgeliehen" << ", " << b.getAusleiher() << ", " << b.getAusleihDatum() << ", " << b.getRueckgabeDatum();
+    os << b.getID() << ", " << b.getTitel() << ", " << b.getAutor() << ", " << b.getVerlag() << ", " << b.getSeitenanzahl() << ", " << "ausgeliehen von " << b.getAusleiher();
   } else {
     os << b.getID() << ", " << b.getTitel() << ", " << b.getAutor() << ", " << b.getVerlag() << ", " << b.getSeitenanzahl() << ", " << "nicht ausgeliehen";
   }
