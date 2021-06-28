@@ -33,14 +33,14 @@ Liste alles Befehle (welche auch mit dem Parameter h im CLI angezeigt werden kan
 
 Desweiteren gibt es Labels welche dem Nutzer zur besseren Bedinung verhelfen sollen:
 
-* <I>	- Kennzeichnet Informationen. Gibt ihnen ggf. auch bestätigung, dass etwas funktioniert hat.
-* <?>	- Kennzeichnet eine Abfrage. Wartet auf ihre Eingabe.
-* <!>	- Kennzeichnet ein Problem. Gibt ihnen Information darüber, dass etwas nicht funktioniert hat.
+* I - Kennzeichnet Informationen. Gibt ihnen ggf. auch bestätigung, dass etwas funktioniert hat.
+* ?	- Kennzeichnet eine Abfrage. Wartet auf ihre Eingabe.
+* !	- Kennzeichnet ein Problem. Gibt ihnen Information darüber, dass etwas nicht funktioniert hat.
 
 ### Kompilieren
 
 Befehl zum kompilieren des Programmes im Terminal:
-$ g++ -Wall main.cpp Klassen/person.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp -o Medienverwaltung
+´g++ -Wall main.cpp Klassen/person.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp -o Medienverwaltung
 
 ### Build
 
