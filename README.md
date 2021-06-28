@@ -41,7 +41,7 @@ Desweiteren gibt es Labels welche dem Nutzer zur besseren Bedinung verhelfen sol
 
 Befehl zum kompilieren des Programmes im Terminal:
 
-`g++ -Wall main.cpp Klassen/person.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp -o Medienverwaltung`
+`g++ main.cpp Klassen/person.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp -o Medienverwaltung`
 
 ### Build
 
