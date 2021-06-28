@@ -22,6 +22,8 @@ using namespace std;
 
 /*
   TODO: Auf Fehler testen, zB mit leerer Datei etc.
+        Kommentare schreiben/Quelltext dokumentieren und erklären
+        Readme schreiben
 */
 
 // Globale Variablen
@@ -61,6 +63,7 @@ bool fileToListe() {
   // Dateiarbeit Variablen
   ifstream file;
   string line, c;
+  istringstream fileStream;
 
   // Personen-Daten einlesen
   file.open(pD);
@@ -70,13 +73,11 @@ bool fileToListe() {
     return false;
   }
 
-  istringstream my_stream;
-
   while (getline(file,line)) {
-    my_stream.str(line);
-    my_stream >> pid >> vorname >> nachname >> c;
+    fileStream.str(line);
+    fileStream >> pid >> vorname >> nachname >> c;
     addPerson(pid, vorname, nachname);
-    my_stream.clear();
+    fileStream.clear();
   }
 
   file.close();
@@ -90,33 +91,33 @@ bool fileToListe() {
   }
 
   while (getline(file,line)) {
-    my_stream.str(line);
-    my_stream >> id >> c;
-    my_stream.clear();
+    fileStream.str(line);
+    fileStream >> id >> c;
+    fileStream.clear();
 
     switch (id.at(0)) {
       case 'B':
       {
-        my_stream.str(line);
-        my_stream >> id >> titel >> ausleihStatus >> ausleiher >> autor >> verlag >> seitenanzahl >> c;
+        fileStream.str(line);
+        fileStream >> id >> titel >> ausleihStatus >> ausleiher >> autor >> verlag >> seitenanzahl >> c;
         addMedium(id, titel, ausleihStatus, ausleiher, autor, verlag, seitenanzahl);
-        my_stream.clear();
+        fileStream.clear();
       }
       break;
       case 'C':
       {
-        my_stream.str(line);
-        my_stream >> id >> titel >> ausleihStatus >> ausleiher >> dauer >> c;
+        fileStream.str(line);
+        fileStream >> id >> titel >> ausleihStatus >> ausleiher >> dauer >> c;
         addMedium(id, titel, ausleihStatus, ausleiher, dauer);
-        my_stream.clear();
+        fileStream.clear();
       }
       break;
       case 'D':
       {
-        my_stream.str(line);
-        my_stream >> id >> titel >> ausleihStatus >> ausleiher >> dauer >> genre >> c;
+        fileStream.str(line);
+        fileStream >> id >> titel >> ausleihStatus >> ausleiher >> dauer >> genre >> c;
         addMedium(id, titel, ausleihStatus, ausleiher, dauer, genre);
-        my_stream.clear();
+        fileStream.clear();
       }
       break;
       default:
@@ -128,47 +129,51 @@ bool fileToListe() {
 
 bool listeToFile() {
   ofstream file;
-  file.open(pD);
+
+  file.open(pD); // Personen Datei öffnen
 
   if(file.fail()) {
     cout << "<!> Datei '" << pD << "' konnte nicht geoeffnet werden. Abbruch. <!>" << endl;
     return false;
   }
 
-  file.seekp(0);
+  file.seekp(0); // Datei auf Anfang setzen
 
+  // Personen Daten auslesen
   for (int i = 0; i < pListe.getSize(); i++) {
     file << pListe[i].getPID() << " " << pListe[i].getVorname() << " " << pListe[i].getNachname() << endl;
   }
-  file.close();
 
-  file.open(mD);
+  file.close(); // Datei schließen
+
+  file.open(mD); // Medien Daten öffnen
 
   if(file.fail()) {
     cout << "<!> Datei '" << mD << "' konnte nicht geoeffnet werden. Abbruch. <!>" << endl;
     return false;
   }
 
-  file.seekp(0);
+  file.seekp(0); // Datei auf Anfang setzen
 
+  // Medien Daten auslesen
   for (int i = 0; i < bListe.getSize(); i++) {
     file << bListe[i].getID() << " " << bListe[i].getTitel() << " " << bListe[i].getAusleihStatus() << " " << bListe[i].getAusleiher() << " " << bListe[i].getAutor() << " " << bListe[i].getVerlag() << " " << bListe[i].getSeitenanzahl() << endl;
   }
-
   for (int i = 0; i < cListe.getSize(); i++) {
     file << cListe[i].getID() << " " << cListe[i].getTitel() << " " << cListe[i].getAusleihStatus() << " " << cListe[i].getAusleiher() << " " << cListe[i].getDauer() << endl;
   }
-
   for (int i = 0; i < dListe.getSize(); i++) {
     file << dListe[i].getID() << " " << dListe[i].getTitel() << " " << dListe[i].getAusleihStatus() << " " << dListe[i].getAusleiher() << " " << dListe[i].getDauer() << " " << dListe[i].getGenre() << endl;
   }
 
-  file.close();
+  file.close(); // Datei schließen
+
   return true;
 }
 
 bool verleih(char c, string id, string pid) {
   int index = -1;
+  // zur Überprüfung ob ausleihen oder zurückgeben
   bool test_val;
   if(c == 'a') {
     test_val = 1;
@@ -178,15 +183,18 @@ bool verleih(char c, string id, string pid) {
   }
   switch (id.at(0)) {
     case 'B':
+      // Index vom zu verleihenden Buch herausfinden
       for (int i = 0; i < bListe.getSize(); i++) {
         if(bListe[i].getID() == id) {
           index = i;
           break;
         }
       }
+      // Für den Fall eines Fehlers
       if ((bListe[index].getAusleihStatus() == test_val) || (index == -1)) {
         return false;
       } else {
+        // Ausleih/Rückgabe anwenden und Parameter des Objekts in Liste ändern
         if (c == 'r') {
           bListe[index].setAusleiher("0");
         }
@@ -198,15 +206,18 @@ bool verleih(char c, string id, string pid) {
       }
     break;
     case 'C':
+    // Index von zu verleihender CD herausfinden
       for (int i = 0; i < cListe.getSize(); i++) {
         if(cListe[i].getID() == id) {
           index = i;
           break;
         }
       }
+      // Für den Fall eines Fehlers
       if ((cListe[index].getAusleihStatus()) == test_val || (index == -1)) {
         return false;
       } else {
+        // Ausleih/Rückgabe anwenden und Parameter des Objekts in Liste ändern
         if (c == 'r') {
           cListe[index].setAusleiher("0");
         } else {
@@ -217,15 +228,18 @@ bool verleih(char c, string id, string pid) {
       }
     break;
     case 'D':
+    // Index von zu verleihender DVD herausfinden
       for (int i = 0; i < dListe.getSize(); i++) {
         if(dListe[i].getID() == id) {
           index = i;
           break;
         }
       }
+      // Für den Fall eines Fehlers
       if ((dListe[index].getAusleihStatus()) == test_val || (index == -1)) {
         return false;
       } else {
+        // Ausleih/Rückgabe anwenden und Parameter des Objekts in Liste ändern
         if (c == 'r') {
           dListe[index].setAusleiher("0");
         } else {
@@ -247,10 +261,10 @@ string setFile() {
   getline(cin, filename);
   file.open(filename);
 
-  if(file.fail()) {
+  if(file.fail()) { // Wenn Datei nicht existiert/nicht geöffnet werden kann, neue erstellen
     file.close();
     file.open(filename, ios::out);
-    if(!file) {
+    if(!file) { // Beim Falle von Misserfolg
       cout << "<!> Datei '" << filename << "' konnte nicht erstellt werden. Abbruch. <!>" << endl;
       return "";
     } else {
@@ -264,11 +278,12 @@ string setFile() {
 }
 
 string replaceAll(string s, char a, char b) {
-  replace(s.begin(),s.end(), a, b);
+  replace(s.begin(),s.end(), a, b); // ersetzt alle vorkommnisse von a mit b
   return s;
 }
 
 int id_exists(string id) {
+  // Überprüfung ob ID existiert
   if (id.at(0) == 'P') {
     for(int i = 0; i < pListe.getSize(); i++) {
       if(pListe[i].getPID() == id) {
@@ -303,19 +318,36 @@ int id_exists(string id) {
 }
 
 string new_id(char c) {
+  // Erstellung einer neuen ID abhängig von den ID welche bereits in der spezifischen Liste stehen
   string new_id, identifier;
   if (c == 'p') {
     identifier = "P";
-    new_id = to_string(stoi(((pListe[pListe.getSize()-1].getPID()).substr(1,3)))+1);
+    if (pListe.getSize() > 0) {
+      new_id = to_string(stoi(((pListe[pListe.getSize()-1].getPID()).substr(1,3)))+1);
+    } else {
+      new_id = "1";
+    }
   } else if (c == 'b') {
     identifier = "B";
-    new_id = to_string(stoi(((bListe[bListe.getSize()-1].getID()).substr(1,3)))+1);
+    if (bListe.getSize() > 0) {
+      new_id = to_string(stoi(((bListe[bListe.getSize()-1].getID()).substr(1,3)))+1);
+    } else {
+      new_id = "1";
+    }
   } else if (c == 'c') {
     identifier = "C";
-    new_id = to_string(stoi(((cListe[cListe.getSize()-1].getID()).substr(1,3)))+1);
+    if (cListe.getSize() > 0) {
+      new_id = to_string(stoi(((cListe[cListe.getSize()-1].getID()).substr(1,3)))+1);
+    } else {
+      new_id = "1";
+    }
   } else if (c == 'd') {
     identifier = "D";
-    new_id = to_string(stoi(((dListe[dListe.getSize()-1].getID()).substr(1,3)))+1);
+    if (dListe.getSize() > 0) {
+      new_id = to_string(stoi(((dListe[dListe.getSize()-1].getID()).substr(1,3)))+1);
+    } else {
+      new_id = "1";
+    }
   }
   if (stoi(new_id) < 10) {
     new_id = identifier + "00" + new_id;
@@ -644,7 +676,7 @@ bool quit() {
 
 int main() {
   // Compiler-Command
-  //prog2_beleg] $ g++ main.cpp Klassen/person.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp
+  // g++ main.cpp Klassen/person.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp
 
   bool running = true;
   string argument;

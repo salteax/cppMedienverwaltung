@@ -1,8 +1,4 @@
 B001 DasBuch 0 0 DerAutor DerVerlag 100
 B002 DasNeueBuch 0 DerAndereAusleieher Jonas_Platin DerAndereVerlag 999
 B003 Das_Buch 0 0 Der_Autor Der_Verlag 1000
-C002 DieCD 1 P001 60
-C003 Die_CD 0 0 1000
-D003 LOLROFL 0 0 15 120
-D001 DieDVD 1 P001 60 Horror
-D002 Die_DVD 0 0 100 Das_Genre
+D001 DieDVD 0 0 15 100 Horror
