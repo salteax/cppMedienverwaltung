@@ -32,3 +32,4 @@ Zum erstellen des Programmes wurde lediglich der g++ Compiler genutzt, wie auch 
 
 Version g++: g++ (GCC) 11.1.0
 Verstion AStyle: Artistic Style Version 3.1
+Version Atom: 1.57.0
