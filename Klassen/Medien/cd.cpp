@@ -14,41 +14,46 @@ using namespace std;
 
 // KONSTRUKTOREN
 
-CD::CD() {
-  setID("");
-  setTitel("");
-  setKennzeichen("cd");
-  setAusleihStatus(false);
-  setAusleiher("");
-  this->dauer="";
+CD::CD()
+{
+    setID("");
+    setTitel("");
+    setKennzeichen("cd");
+    setAusleihStatus(false);
+    setAusleiher("");
+    this->dauer="";
 }
 
-CD::CD(string id, string titel, bool ausleihStatus, string ausleiher, string dauer) {
-  setID(id);
-  setTitel(titel);
-  setKennzeichen("cd");
-  setAusleihStatus(ausleihStatus);
-  setAusleiher(ausleiher);
-  this->dauer=dauer;
+CD::CD(string id, string titel, bool ausleihStatus, string ausleiher, string dauer)
+{
+    setID(id);
+    setTitel(titel);
+    setKennzeichen("cd");
+    setAusleihStatus(ausleihStatus);
+    setAusleiher(ausleiher);
+    this->dauer=dauer;
 }
 
 // SETTER & GETTER
 
-void CD::setDauer(string dauer) {
-  this->dauer=dauer;
+void CD::setDauer(string dauer)
+{
+    this->dauer=dauer;
 }
 
-string CD::getDauer() {
-  return dauer;
+string CD::getDauer()
+{
+    return dauer;
 }
 
 // OPERATOR
 
-ostream& operator<<(ostream& os, CD& c) {
-  if (c.getAusleihStatus()) {
-    os << c.getID() << ", " << c.getTitel() << ", " << c.getDauer() << ", " << "ausgeliehen von " << c.getAusleiher();
-  } else {
-    os << c.getID() << ", " << c.getTitel() << ", " << c.getDauer() << ", " << "nicht ausgeliehen";
-  }
-  return os;
+ostream& operator<<(ostream& os, CD& c)
+{
+    if (c.getAusleihStatus()) {
+        os << c.getID() << ", " << c.getTitel() << ", " << c.getDauer() << ", " << "ausgeliehen von " << c.getAusleiher();
+    } else {
+        os << c.getID() << ", " << c.getTitel() << ", " << c.getDauer() << ", " << "nicht ausgeliehen";
+    }
+    return os;
 }

@@ -8,21 +8,22 @@
 
 #ifndef _MEDIUM_H_
 #define _MEDIUM_H_
-class Medium {
+class Medium
+{
 public:
-  // SETTER & GETTER
-  void setID(string id);
-  string getID();
-  void setTitel(string titel);
-  string getTitel();
-  void setKennzeichen(string kennzeichen);
-  string getKennzeichen();
-  void setAusleihStatus(bool ausleihStatus);
-  bool getAusleihStatus();
-  void setAusleiher(string pid);
-  string getAusleiher();
+    // SETTER & GETTER
+    void setID(string id);
+    string getID();
+    void setTitel(string titel);
+    string getTitel();
+    void setKennzeichen(string kennzeichen);
+    string getKennzeichen();
+    void setAusleihStatus(bool ausleihStatus);
+    bool getAusleihStatus();
+    void setAusleiher(string pid);
+    string getAusleiher();
 private:
-  string id, pid, titel, kennzeichen;
-  bool ausleihStatus;
+    string id, pid, titel, kennzeichen;
+    bool ausleihStatus;
 };
 #endif

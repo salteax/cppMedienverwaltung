@@ -13,42 +13,52 @@ using namespace std;
 
 // SETTER & GETTER
 
-void Medium::setID(string id) {
-  this->id=id;
+void Medium::setID(string id)
+{
+    this->id=id;
 }
 
-string Medium::getID() {
-  return id;
+string Medium::getID()
+{
+    return id;
 }
 
-void Medium::setTitel(string titel) {
-  this->titel=titel;
+void Medium::setTitel(string titel)
+{
+    this->titel=titel;
 }
 
-string Medium::getTitel() {
-  return titel;
+string Medium::getTitel()
+{
+    return titel;
 }
 
-void Medium::setKennzeichen(string kennzeichen) {
-  this->kennzeichen=kennzeichen;
+void Medium::setKennzeichen(string kennzeichen)
+{
+    this->kennzeichen=kennzeichen;
 }
 
-string Medium::getKennzeichen() {
-  return kennzeichen;
+string Medium::getKennzeichen()
+{
+    return kennzeichen;
 }
 
-void Medium::setAusleihStatus(bool ausleihStatus) {
-  this->ausleihStatus=ausleihStatus;
+void Medium::setAusleihStatus(bool ausleihStatus)
+{
+    this->ausleihStatus=ausleihStatus;
 }
 
-bool Medium::getAusleihStatus() {
-  return ausleihStatus;
+bool Medium::getAusleihStatus()
+{
+    return ausleihStatus;
 }
 
-void Medium::setAusleiher(string pid) {
-  this->pid=pid;
+void Medium::setAusleiher(string pid)
+{
+    this->pid=pid;
 }
 
-string Medium::getAusleiher() {
-  return pid;
+string Medium::getAusleiher()
+{
+    return pid;
 }

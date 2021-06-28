@@ -14,61 +14,70 @@ using namespace std;
 
 // KONSTRUKTOREN
 
-Buch::Buch() {
-  setID("");
-  setTitel("");
-  setKennzeichen("b");
-  setAusleihStatus(false);
-  setAusleiher("");
-  this->autor="";
-  this->verlag="";
-  this->seitenanzahl="";
+Buch::Buch()
+{
+    setID("");
+    setTitel("");
+    setKennzeichen("b");
+    setAusleihStatus(false);
+    setAusleiher("");
+    this->autor="";
+    this->verlag="";
+    this->seitenanzahl="";
 }
 
-Buch::Buch(string id, string titel, bool ausleihStatus, string ausleiher, string autor, string verlag, string seitenanzahl) {
-  setID(id);
-  setTitel(titel);
-  setKennzeichen("b");
-  setAusleihStatus(ausleihStatus);
-  setAusleiher(ausleiher);
-  this->autor=autor;
-  this->verlag=verlag;
-  this->seitenanzahl=seitenanzahl;
+Buch::Buch(string id, string titel, bool ausleihStatus, string ausleiher, string autor, string verlag, string seitenanzahl)
+{
+    setID(id);
+    setTitel(titel);
+    setKennzeichen("b");
+    setAusleihStatus(ausleihStatus);
+    setAusleiher(ausleiher);
+    this->autor=autor;
+    this->verlag=verlag;
+    this->seitenanzahl=seitenanzahl;
 }
 
 // SETTER & GETTER
 
-void Buch::setAutor(string autor) {
-  this->autor=autor;
+void Buch::setAutor(string autor)
+{
+    this->autor=autor;
 }
 
-string Buch::getAutor() {
-  return autor;
+string Buch::getAutor()
+{
+    return autor;
 }
 
-void Buch::setVerlag(string verlag) {
-  this->verlag=verlag;
+void Buch::setVerlag(string verlag)
+{
+    this->verlag=verlag;
 }
 
-string Buch::getVerlag() {
-  return verlag;
+string Buch::getVerlag()
+{
+    return verlag;
 }
 
-void Buch::setSeitenanzahl(string seitenanzahl) {
-  this->seitenanzahl=seitenanzahl;
+void Buch::setSeitenanzahl(string seitenanzahl)
+{
+    this->seitenanzahl=seitenanzahl;
 }
 
-string Buch::getSeitenanzahl() {
-  return seitenanzahl;
+string Buch::getSeitenanzahl()
+{
+    return seitenanzahl;
 }
 
 // OPERATOR
 
-ostream& operator<<(ostream& os, Buch& b) {
-  if (b.getAusleihStatus()) {
-    os << b.getID() << ", " << b.getTitel() << ", " << b.getAutor() << ", " << b.getVerlag() << ", " << b.getSeitenanzahl() << ", " << "ausgeliehen von " << b.getAusleiher();
-  } else {
-    os << b.getID() << ", " << b.getTitel() << ", " << b.getAutor() << ", " << b.getVerlag() << ", " << b.getSeitenanzahl() << ", " << "nicht ausgeliehen";
-  }
-  return os;
+ostream& operator<<(ostream& os, Buch& b)
+{
+    if (b.getAusleihStatus()) {
+        os << b.getID() << ", " << b.getTitel() << ", " << b.getAutor() << ", " << b.getVerlag() << ", " << b.getSeitenanzahl() << ", " << "ausgeliehen von " << b.getAusleiher();
+    } else {
+        os << b.getID() << ", " << b.getTitel() << ", " << b.getAutor() << ", " << b.getVerlag() << ", " << b.getSeitenanzahl() << ", " << "nicht ausgeliehen";
+    }
+    return os;
 }

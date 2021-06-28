@@ -10,19 +10,20 @@
 
 #ifndef _DVD_H_
 #define _DVD_H_
-class DVD : public Medium {
+class DVD : public Medium
+{
 public:
-  // KONSTRUKTOREN
-  DVD();
-  DVD(string id, string titel, bool ausleihStatus, string ausleiher, string dauer, string genre);
-  // SETTER & GETTER
-  void setDauer(string dauer);
-  string getDauer();
-  void setGenre(string genre);
-  string getGenre();
-  // OPERATOR
-  friend ostream& operator<<(ostream& os, DVD& d);
+    // KONSTRUKTOREN
+    DVD();
+    DVD(string id, string titel, bool ausleihStatus, string ausleiher, string dauer, string genre);
+    // SETTER & GETTER
+    void setDauer(string dauer);
+    string getDauer();
+    void setGenre(string genre);
+    string getGenre();
+    // OPERATOR
+    friend ostream& operator<<(ostream& os, DVD& d);
 private:
-  string fsk, dauer, genre;
+    string fsk, dauer, genre;
 };
 #endif

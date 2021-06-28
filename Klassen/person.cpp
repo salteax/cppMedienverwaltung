@@ -14,45 +14,54 @@ using namespace std;
 
 // KONSTRUKTOREN
 
-Person::Person() {
-  pid=vorname=nachname="";
+Person::Person()
+{
+    pid=vorname=nachname="";
 }
 
-Person::Person(string pid, string vorname, string nachname) {
-  this->pid = pid;
-  this->vorname = vorname;
-  this->nachname = nachname;
+Person::Person(string pid, string vorname, string nachname)
+{
+    this->pid = pid;
+    this->vorname = vorname;
+    this->nachname = nachname;
 }
 
 // SETTER & GETTER
 
-void Person::setPID(string pid) {
-  this->pid=pid;
+void Person::setPID(string pid)
+{
+    this->pid=pid;
 }
 
-string Person::getPID() {
-  return pid;
+string Person::getPID()
+{
+    return pid;
 }
 
-void Person::setVorname(string vorname) {
-  this->vorname=vorname;
+void Person::setVorname(string vorname)
+{
+    this->vorname=vorname;
 }
 
-string Person::getVorname() {
-  return vorname;
+string Person::getVorname()
+{
+    return vorname;
 }
 
-void Person::setNachname(string nachname) {
-  this->nachname=nachname;
+void Person::setNachname(string nachname)
+{
+    this->nachname=nachname;
 }
 
-string Person::getNachname() {
-  return nachname;
+string Person::getNachname()
+{
+    return nachname;
 }
 
 // OPERATOR
 
-ostream& operator<<(ostream& os, Person& p) {
-  os << p.getPID() << ", " << p.getVorname() << " " << p.getNachname();
-  return os;
+ostream& operator<<(ostream& os, Person& p)
+{
+    os << p.getPID() << ", " << p.getVorname() << " " << p.getNachname();
+    return os;
 }
