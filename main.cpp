@@ -26,9 +26,8 @@ Liste<Buch> bListe;
 Liste<CD> cListe;
 Liste<DVD> dListe;
 
-string pD, mD;
+string pD, mD, prompt = "~> ";
 bool fileLoaded = false, fileSaved = false;
-string prompt = "~> ";
 
 // Listen Funktionen
 void addPerson(string pid, string vorname, string nachname)
@@ -59,8 +58,7 @@ void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, st
 bool fileToListe()
 {
     // Objektbezogene Variablen
-    string pid, vorname, nachname;
-    string id, titel, ausleiher, autor, verlag, seitenanzahl, dauer, genre;
+    string pid, vorname, nachname, id, titel, ausleiher, autor, verlag, seitenanzahl, dauer, genre;
     bool ausleihStatus;
     // Dateiarbeit Variablen
     ifstream file;
@@ -282,16 +280,16 @@ string checkFile()
     return filename;
 }
 
+// ersetzt alle vorkommnisse von a mit b
 string replaceAll(string s, char a, char b)
 {
-    // ersetzt alle vorkommnisse von a mit b
     replace(s.begin(),s.end(), a, b);
     return s;
 }
 
+// Überprüfung ob ID existiert
 int idExists(string id)
 {
-    // Überprüfung ob ID existiert
     if (id.at(0) == 'P') {
         for(int i = 0; i < pListe.getSize(); i++) {
             if(pListe[i].getPID() == id) {
@@ -325,6 +323,7 @@ int idExists(string id)
     }
 }
 
+// erzeugt neue ID
 string newID(string identifier)
 {
     string newID;
