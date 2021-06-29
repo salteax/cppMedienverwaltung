@@ -20,12 +20,6 @@ using namespace std;
 #include "./Klassen/Medien/cd.h"
 #include "./Klassen/Medien/dvd.h"
 
-/*
-  TODO: Auf Fehler testen, zB mit leerer Datei etc.
-        Kommentare schreiben/Quelltext dokumentieren und erklären
-        Readme schreiben
-*/
-
 // Globale Variablen
 Liste<Person> pListe;
 Liste<Buch> bListe;
@@ -34,8 +28,9 @@ Liste<DVD> dListe;
 
 string pD, mD;
 bool fileLoaded = false, fileSaved = false;
-string uIS = "~> "; // userInputStyle
+string prompt = "~> ";
 
+// Listen Funktionen
 void addPerson(string pid, string vorname, string nachname)
 {
     Person tempPerson(pid, vorname, nachname);
@@ -60,6 +55,7 @@ void addMedium(string id, string titel, bool ausleihStatus, string ausleiher, st
     dListe.addElement(tempDVD);
 }
 
+// einlesen
 bool fileToListe()
 {
     // Objektbezogene Variablen
@@ -132,6 +128,7 @@ bool fileToListe()
     return true;
 }
 
+// auslesen
 bool listeToFile()
 {
     ofstream file;
@@ -178,6 +175,8 @@ bool listeToFile()
 
     return true;
 }
+
+// allgemeine Funktionen
 
 bool verleih(char c, string id, string pid)
 {
@@ -369,11 +368,13 @@ string newID(string identifier)
     return newID;
 }
 
+// CLI Funktionen
+
 bool loadFile()
 {
-    cout << "<?> Datei(pfad) zur Verwaltung der Personen: <?>" << endl << uIS;
+    cout << "<?> Datei(pfad) zur Verwaltung der Personen: <?>" << endl << prompt;
     pD = checkFile();
-    cout << "<?> Datei(pfad) zur Verwaltung der Medien: <?>" << endl << uIS;
+    cout << "<?> Datei(pfad) zur Verwaltung der Medien: <?>" << endl << prompt;
     mD = checkFile();
 
     // Listen zurücksetzen weil Neue Datei geöffnet wird
@@ -400,16 +401,16 @@ bool saveFile()
 {
     string answer;
 
-    cout << "<?> Wollen sie die Daten aus den Listen in die gleichen Dateien schreiben aus den gelesen wurde? (j/n) <?>" << endl << uIS;
+    cout << "<?> Wollen sie die Daten aus den Listen in die gleichen Dateien schreiben aus den gelesen wurde? (j/n) <?>" << endl << prompt;
     getline(cin, answer);
     if (answer == "j") {
         listeToFile();
         cout << "<I> Listen wurden in Dateien gespeichert. <I>" << endl;
         return true;
     } else if (answer == "n") {
-        cout << "<?> Datei(pfad) zur Verwaltung der Personen: <?>" << endl << uIS;
+        cout << "<?> Datei(pfad) zur Verwaltung der Personen: <?>" << endl << prompt;
         pD = checkFile();
-        cout << "<?> Datei(pfad) zur Verwaltung der Medien: <?>" << endl << uIS;
+        cout << "<?> Datei(pfad) zur Verwaltung der Medien: <?>" << endl << prompt;
         mD = checkFile();
         listeToFile();
         cout << "<I> Listen wurden in neue Dateien gespeichert. <I>" << endl;
@@ -424,7 +425,7 @@ void list()
 {
     string answer;
 
-    cout << "<?> Welche Liste möchten sie ausgeben? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl << uIS;
+    cout << "<?> Welche Liste möchten sie ausgeben? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl << prompt;
     getline(cin, answer);
 
     if ((answer == "p") || (answer == "person" )) {
@@ -472,41 +473,41 @@ void newEntry()
 {
     string answer;
 
-    cout << "<?> In welcher Liste möchten sie ein Eintrag hinzufügen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl << uIS;
+    cout << "<?> In welcher Liste möchten sie ein Eintrag hinzufügen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl << prompt;
     getline(cin, answer);
     if((answer == "p") || (answer == "person")) {
         string vorname, nachname;
-        cout << "<?> Vorname: <?>" << endl << uIS;
+        cout << "<?> Vorname: <?>" << endl << prompt;
         getline(cin, vorname);
-        cout << "<?> Nachname: <?>" << endl << uIS;
+        cout << "<?> Nachname: <?>" << endl << prompt;
         getline(cin, nachname);
         addPerson(newID("P"), replaceAll(vorname, ' ', '_'), replaceAll(nachname, ' ', '_'));
         cout << "<I> Person wurde der Liste hinzugefügt. <I>" << endl;
     } else if(answer == "b" || answer == "buch" || answer == "c" || answer == "cd" || answer == "d" || answer == "dvd") {
         string titel;
-        cout << "<?> Titel: <?>" << endl << uIS;
+        cout << "<?> Titel: <?>" << endl << prompt;
         getline(cin, titel);
         if(answer == "b" || answer == "buch") {
             string autor, verlag, seitenanzahl;
-            cout << "<?> Autor: <?>" << endl << uIS;
+            cout << "<?> Autor: <?>" << endl << prompt;
             getline(cin, autor);
-            cout << "<?> Verlag: <?>" << endl << uIS;
+            cout << "<?> Verlag: <?>" << endl << prompt;
             getline(cin, verlag);
-            cout << "<?> Seitenanzahl: <?>" << endl << uIS;
+            cout << "<?> Seitenanzahl: <?>" << endl << prompt;
             getline(cin, seitenanzahl);
             addMedium(newID("B"), replaceAll(titel, ' ', '_'), 0, "0", replaceAll(autor, ' ', '_'), replaceAll(verlag, ' ', '_'), replaceAll(seitenanzahl, ' ', '_'));
             cout << "<I> Buch wurde der Liste hinzugefügt. <I>" << endl;
         } else if(answer == "c" || answer == "cd") {
             string dauer;
-            cout << "<?> Dauer: <?>" << endl << uIS;
+            cout << "<?> Dauer: <?>" << endl << prompt;
             getline(cin, dauer);
             addMedium(newID("C"), replaceAll(titel, ' ', '_'), 0, "0", replaceAll(dauer, ' ', '_'));
             cout << "<I> CD wurde der Liste hinzugefügt. <I>" << endl;
         } else if(answer == "d" || answer == "dvd") {
             string fsk, dauer, genre;
-            cout << "<?> Dauer: <?>" << endl << uIS;
+            cout << "<?> Dauer: <?>" << endl << prompt;
             getline(cin, dauer);
-            cout << "<?> Genre: <?>" << endl << uIS;
+            cout << "<?> Genre: <?>" << endl << prompt;
             getline(cin, genre);
             addMedium(newID("D"), replaceAll(titel, ' ', '_'), 0, "0", replaceAll(dauer, ' ', '_'), replaceAll(genre, ' ', '_'));
             cout << "<I> DVD wurde der Liste hinzugefügt. <I>" << endl;
@@ -521,11 +522,11 @@ void del()
     string answer;
     int occupiedItems = 0, index = 0;
 
-    cout << "<?> Aus welcher Liste möchten sie einen Eintrag löschen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl << uIS;
+    cout << "<?> Aus welcher Liste möchten sie einen Eintrag löschen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl << prompt;
     getline(cin, answer);
     if((answer == "p") || (answer == "person")) {
         string pid;
-        cout << "<?> PID zum zu löschenden Eintrag: <?>" << endl << uIS;
+        cout << "<?> PID zum zu löschenden Eintrag: <?>" << endl << prompt;
         getline(cin, pid);
         index = idExists(pid);
         if (index != -1) {
@@ -555,7 +556,7 @@ void del()
         }
     } else if(answer == "b" || answer == "buch" || answer == "c" || answer == "cd" || answer == "d" || answer == "dvd") {
         string id;
-        cout << "<?> ID zum zu löschenden Eintrag: <?>" << endl << uIS;
+        cout << "<?> ID zum zu löschenden Eintrag: <?>" << endl << prompt;
         getline(cin, id);
         index = idExists(id);
         if (index != -1) {
@@ -595,9 +596,9 @@ void search()
     string answer, searchArgument;
     int foundArguments = 0;
 
-    cout << "<?> In welcher Liste möchten sie suchen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl << uIS;
+    cout << "<?> In welcher Liste möchten sie suchen? ([p]erson, [b]uch, [c]d, [d]vd) <?>" << endl << prompt;
     getline(cin, answer);
-    cout << "<?> Geben sie den Begriff ein nach dem sie suchen möchten. <?>" << endl << uIS;
+    cout << "<?> Geben sie den Begriff ein nach dem sie suchen möchten. <?>" << endl << prompt;
     getline(cin, searchArgument);
 
     searchArgument = replaceAll(searchArgument, ' ', '_');
@@ -642,10 +643,10 @@ void ausleih()
 {
     string pid, mid;
 
-    cout << "<?> PID der Person welche das Medium ausleihen möchte: <?>" << endl << uIS;
+    cout << "<?> PID der Person welche das Medium ausleihen möchte: <?>" << endl << prompt;
     getline(cin, pid);
     if (idExists(pid) != -1) {
-        cout << "<?> ID des Mediums welches ausgeliehen werden möchte: <?>" << endl << uIS;
+        cout << "<?> ID des Mediums welches ausgeliehen werden möchte: <?>" << endl << prompt;
         getline(cin, mid);
         if (verleih('a', mid, pid)) {
             cout << "<I> Medium mit der ID '" << mid << "' wurde an die Person mit der PID '" << pid << "' verliehen. <I>" << endl;
@@ -661,10 +662,10 @@ void rueckgabe()
 {
     string pid, mid;
 
-    cout << "<?> PID der Person welche das Medium zurückgeben möchte: <?>" << endl << uIS;
+    cout << "<?> PID der Person welche das Medium zurückgeben möchte: <?>" << endl << prompt;
     getline(cin, pid);
     if (idExists(pid) != -1) {
-        cout << "<?> ID des Mediums welches zurückgegeben werden möchte: <?>" << endl << uIS;
+        cout << "<?> ID des Mediums welches zurückgegeben werden möchte: <?>" << endl << prompt;
         getline(cin, mid);
         if (verleih('r', mid, pid)) {
             cout << "<I> Medium mit der ID '" << mid << "' wurde von der Person mit der PID '" << pid << "' zurückgegeben. <I>" << endl;
@@ -698,7 +699,7 @@ bool quit()
     string answer;
 
     if (fileLoaded && (fileSaved == false)) {
-        cout << "<?> Wollen sie ihre Änderungen speichern? (j/n) <?>" << endl << uIS;
+        cout << "<?> Wollen sie ihre Änderungen speichern? (j/n) <?>" << endl << prompt;
         getline(cin, answer);
         if (answer == "j") {
             fileSaved = saveFile();
@@ -724,7 +725,7 @@ int main()
   cout << "<I> Geben sie 'h' ein für eine Liste aller Funktionen, ihrer funktionsweise und den dazugehörigen Parametern. <I>" << endl;
 
   while (running) {
-    cout << uIS;
+    cout << prompt;
 
     getline(cin, argument);
 

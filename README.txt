@@ -28,8 +28,6 @@ Desweiteren gibt es Labels welche dem Nutzer zur besseren Bedinung verhelfen sol
 Befehl zum kompilieren des Programmes im Terminal:
 g++ main.cpp Klassen/person.cpp Klassen/Medien/medium.cpp Klassen/Medien/buch.cpp Klassen/Medien/cd.cpp Klassen/Medien/dvd.cpp -o Medienverwaltung
 
-Zum erstellen des Programmes wurde lediglich der g++ Compiler genutzt, wie auch ein Editor (Atom) und AStyle zum einheitlichen formatieren des Quelltextes.
+Zum erstellen des Programmes wurde lediglich der g++ Compiler genutzt, wie auch ein Editor.
 
 Version g++: g++ (GCC) 11.1.0
-Verstion AStyle: Artistic Style Version 3.1
-Version Atom: 1.57.0

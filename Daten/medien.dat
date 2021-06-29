@@ -1,0 +1,6 @@
+B001 DasBuch 0 0 DerAutor DerVerlag 999
+B002 Das_Buch 0 0 Der_Autor Der_Verlag 250
+C001 DieCD 0 0 60
+C002 Die_CD 0 0 150
+D001 DieDVD 0 0 300 DasGenre
+D002 Die_DVD 0 0 55 Das_Genre
