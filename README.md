@@ -1,7 +1,5 @@
 # Medienverwaltung
 
-### Programmierung 2 - Beleg
-
 ### Inhalt
 * [Worum geht es?](#worum-geht-es)
 * [Funktionen](#funktionen)
