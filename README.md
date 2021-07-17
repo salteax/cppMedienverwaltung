@@ -48,5 +48,3 @@ Befehl zum kompilieren des Programmes im Terminal:
 Zum erstellen des Programmes wurde lediglich der g++ Compiler genutzt, wie auch ein Editor (Atom) und AStyle zum einheitlichen formatieren des Quelltextes.
 
 * Version g++: g++ (GCC) 11.1.0
-* Verstion AStyle: Artistic Style Version 3.1
-* Version Atom: 1.57.0
